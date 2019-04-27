@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.lib.managed
+import kotlin.math.roundToInt
 
 enum class States {
     EMPTY_ROOM, WITH_MAN, DOCUMENT_REVIEW
@@ -19,10 +20,14 @@ class GameStateMachine(
 ) {
     private lateinit var personTextures: PersonTextures
     private var state: States = States.EMPTY_ROOM
-    private val inputs = InputAdapterHolder()
+    private val inputs = InputAdapterHolder(stage)
+
+    init {
+        Gdx.input.inputProcessor = inputs
+    }
+
 
     fun render() {
-        Gdx.input.inputProcessor = inputs
         when (state) {
             States.EMPTY_ROOM -> renderEmptyRoom()
             States.WITH_MAN -> renderWithMan()
@@ -53,11 +58,6 @@ class GameStateMachine(
 
     private fun renderEmptyRoom() {
         if (inputs.isMouseClicked) {
-            val x = Gdx.input.x.toFloat()
-            val y = Gdx.input.y.toFloat()
-            val vec = Vector3(x, y, 0f)
-            stage.camera.unproject(vec)
-//            println(vec)
             state = States.WITH_MAN
             personTextures = RandomPersonTextures()
         }
@@ -87,10 +87,18 @@ class GameStateMachine(
             it.draw(am.at<Texture>(personTextures.shlapa), 0f, 0f)
         }
     }
+
+    fun onExit() {
+        Gdx.input.inputProcessor = null
+    }
 }
 
-class InputAdapterHolder: InputAdapter() {
+class InputAdapterHolder(
+    private val stage: Stage
+): InputAdapter() {
     var isMouseClicked = false
+    var mouseX: Int = -1
+    var mouseY: Int = -1
 
     fun update() {
         isMouseClicked = false
@@ -98,10 +106,12 @@ class InputAdapterHolder: InputAdapter() {
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         if (pointer == Input.Buttons.LEFT) {
-//            val x = Const.Projection.calcX(screenX)
-//            val y = Const.Projection.calcY(screenY)
+            val vec = Vector3(screenX.toFloat(), screenY.toFloat(), 0f)
+            stage.viewport.unproject(vec)
             isMouseClicked = true
-            println("screenX: $screenX screenY: $screenY pointer: $pointer button: $button")
+            mouseX = vec.x.roundToInt()
+            mouseY = vec.y.roundToInt()
+            println("x=$mouseX, y=$mouseY")
         }
 
         return true

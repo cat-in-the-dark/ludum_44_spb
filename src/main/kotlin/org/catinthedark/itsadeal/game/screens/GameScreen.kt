@@ -20,6 +20,6 @@ class GameScreen(private val stage: Stage): YieldUnit<AssetManager, AssetManager
     }
 
     override fun onExit() {
-
+        gameState.onExit()
     }
 }
