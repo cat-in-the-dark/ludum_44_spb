@@ -11,7 +11,7 @@ class TitleScreen(private val stage: Stage): YieldUnit<AssetManager, AssetManage
     private lateinit var am: AssetManager
 
     private var time = 0f
-    private val SCREEN_TIME = 1f
+    private val SCREEN_TIME = 0.5f
 
     override fun onActivate(data: AssetManager) {
         am = data
@@ -22,7 +22,6 @@ class TitleScreen(private val stage: Stage): YieldUnit<AssetManager, AssetManage
         stage.batch.managed {
             it.draw(am.get(Assets.Names.TITLE, Texture::class.java), 0f, 0f)
         }
-        stage.draw()
         time += delta
         if (time > SCREEN_TIME) return am
         return null

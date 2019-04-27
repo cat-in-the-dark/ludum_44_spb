@@ -28,7 +28,6 @@ class SplashScreen(
                 it.draw(am.get(Assets.Names.LOGO, Texture::class.java), 0f, 0f)
             }
         }
-        stage.draw()
 
         return null
     }
