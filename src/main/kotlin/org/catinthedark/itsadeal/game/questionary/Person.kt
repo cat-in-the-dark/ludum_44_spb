@@ -2,6 +2,7 @@ package org.catinthedark.itsadeal.game.questionary
 
 import org.catinthedark.itsadeal.game.exceptions.InvalidAnswerException
 import org.catinthedark.itsadeal.game.exceptions.InvalidFractionException
+import org.slf4j.LoggerFactory
 
 class Person(
     private val isEvil: Boolean,
@@ -9,7 +10,10 @@ class Person(
     private val incriminatingPart: Float
 ) {
 
+    private val log = LoggerFactory.getLogger(Person::class.java)
+
     init {
+        log.info("Got person, evil = $isEvil")
         if (incriminatingPart < 0 || incriminatingPart > 1) {
             throw InvalidFractionException("Fraction must be in [0,1], got $incriminatingPart")
         }
@@ -28,6 +32,8 @@ class Person(
                 incriminatingAnswers = 0
                 neutralAnswers = number
             }
+
+            log.info("Incriminating: $incriminatingAnswers, neutral: $neutralAnswers")
 
             repeat(incriminatingAnswers) {
                 val question = QuestionPool.getQuestion(AnswerType.INCRIMINATING)

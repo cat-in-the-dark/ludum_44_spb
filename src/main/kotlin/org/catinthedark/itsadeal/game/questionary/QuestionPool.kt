@@ -8,15 +8,54 @@ object QuestionPool {
      */
     private val questionTemplates: Map<TemplateString, Pair<TemplateString, TemplateString>> = mapOf(
         Pair(
-            TemplateString("%s, how are you?", listOf(listOf("Sup", "Hello", "Hi"))),
+            TemplateString("Всё %s?", "как договаривались", "согласно договорённостям"),
             Pair(
-                TemplateString("I'm fine, thanks!"),
-                TemplateString("Glory to the Arstotzka!")
+                TemplateString("Можете пересчитать."),
+                TemplateString("У нас всё точно.")
+            )
+        ),
+        Pair(
+            TemplateString("Хорошая сегодня погода, не так ли?"),
+            Pair(
+                TemplateString("Да, с радостью бы прогулялся сегодня"),
+                TemplateString("Так точно")
+            )
+        ),
+        Pair(
+            TemplateString(
+                "Похоже, %s. Я обычно очень занят.",
+                listOf(listOf("у вас сегодня удачный день", "вам сегодня повезло"))
+            ),
+            Pair(
+                TemplateString("%s об этом не думал", "Хм, я", "Я"),
+                TemplateString("Да, я давно ждал нашей встречи.")
+            )
+        ),
+        Pair(
+            TemplateString("Вы торопитесь?"),
+            Pair(
+                TemplateString("Нет, я никуда не тороплюсь"),
+                TemplateString("Нет, мы никуда не торопимся")
+            )
+        ),
+        Pair(
+            TemplateString("Передать привет жене?"),
+            Pair(
+                TemplateString("%s", "При чём тут ваша жена?", "Не думаю, что я с ней знаком"),
+                TemplateString("Ммм... Да. Да. Обязательно.")
+            )
+        ),
+        Pair(
+            TemplateString("На этот раз вы внесли все изменения о которых мы договаривались?"),
+            Pair(
+                TemplateString("Да, я всё перепроверил"),
+                TemplateString("У нас всё точно")
             )
         )
     )
 
-    private val isQuestionAskedMap: MutableMap<TemplateString, Boolean> = hashMapOf(
+    private
+    val isQuestionAskedMap: MutableMap<TemplateString, Boolean> = hashMapOf(
         *questionTemplates.map {
             Pair(it.key, false)
         }.toTypedArray()
@@ -29,13 +68,15 @@ object QuestionPool {
             )
         }
 
-        val question = questionTemplates.entries.random()
-        isQuestionAskedMap[question.key] = false
+        val notAskedQuestions = isQuestionAskedMap.filter { !it.value }.keys
+
+        val question = questionTemplates.filter { notAskedQuestions.contains(it.key) }.entries.random()
+        isQuestionAskedMap[question.key] = true
 
         return if (answerType == AnswerType.NEUTRAL) {
             Pair(question.key.getText(), Answer(question.value.first.getText(), AnswerType.NEUTRAL))
         } else {
-            Pair(question.key.getText(), Answer(question.value.second.getText(), AnswerType.NEUTRAL))
+            Pair(question.key.getText(), Answer(question.value.second.getText(), AnswerType.INCRIMINATING))
         }
     }
 }

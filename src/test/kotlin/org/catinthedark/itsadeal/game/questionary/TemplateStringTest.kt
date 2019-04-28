@@ -30,15 +30,24 @@ class TemplateStringTest {
     }
 
     @Test
-    fun getTextNotEnoughSunstitutions() {
+    fun getTextNotEnoughSubstitutions() {
         val text = TemplateString(
             "this is a %s test %s",
             listOf(listOf("one", "two"))
         )
 
-        val result = text.getText()
-        assertTrue(result.contains("this is a"))
-        assertTrue(result.contains("test"))
-        assertTrue(result.contains("one") || result.contains("two"))
+        var thrown = false
+        try {
+            text.getText()
+        } catch (e: Throwable) {
+            thrown = true
+        }
+        assertTrue(thrown)
+    }
+
+    @Test
+    fun testVariardic() {
+        val text = TemplateString("one %s substitution", "goes here").getText()
+        assertEquals("one goes here substitution", text)
     }
 }
