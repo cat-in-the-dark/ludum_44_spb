@@ -18,6 +18,7 @@ import org.catinthedark.itsadeal.lib.RouteMachine
 class ItsaDealGame : Game() {
     private val rm = RouteMachine()
     private lateinit var stage: Stage
+    private lateinit var hud: Stage
 
     override fun create() {
         stage = Stage(
@@ -27,10 +28,17 @@ class ItsaDealGame : Game() {
                 OrthographicCamera()
             ), SpriteBatch()
         )
+        hud = Stage(
+            FitViewport(
+                Const.Screen.WIDTH_BIG / Const.Screen.ZOOM_BIG,
+                Const.Screen.HEIGHT_BIG / Const.Screen.ZOOM_BIG,
+                OrthographicCamera()
+            ), SpriteBatch()
+        )
 
-        val splash = SplashScreen(stage)
-        val title = TitleScreen(stage)
-        val game = GameScreen(stage)
+        val splash = SplashScreen(hud)
+        val title = TitleScreen(hud)
+        val game = GameScreen(stage, hud)
 
         rm.addRoute(splash) { title }
         rm.addRoute(title) { game }
@@ -46,8 +54,13 @@ class ItsaDealGame : Game() {
         stage.act(Gdx.graphics.deltaTime)
         stage.batch.projectionMatrix = stage.viewport.camera.combined
 
+        hud.viewport.apply()
+        hud.act(Gdx.graphics.deltaTime)
+        hud.batch.projectionMatrix = hud.viewport.camera.combined
+
         rm.run(Gdx.graphics.deltaTime)
         stage.draw()
+        hud.draw()
 
         super.render()
     }
@@ -55,5 +68,6 @@ class ItsaDealGame : Game() {
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
         stage.viewport.update(width, height)
+        hud.viewport.update(width, height)
     }
 }

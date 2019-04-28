@@ -5,13 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.GameStateMachine
 import org.catinthedark.itsadeal.lib.YieldUnit
 
-class GameScreen(private val stage: Stage): YieldUnit<AssetManager, AssetManager> {
+class GameScreen(private val stage: Stage, private val hud: Stage): YieldUnit<AssetManager, AssetManager> {
     private lateinit var am: AssetManager
     private lateinit var gameState: GameStateMachine
 
     override fun onActivate(data: AssetManager) {
         am = data
-        gameState = GameStateMachine(stage, am)
+        gameState = GameStateMachine(stage, hud, am)
     }
 
     override fun run(delta: Float): AssetManager? {

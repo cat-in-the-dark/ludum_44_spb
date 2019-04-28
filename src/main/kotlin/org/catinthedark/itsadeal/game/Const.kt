@@ -12,6 +12,7 @@ object Const {
     }
 
     object Projection {
-
+        val ratio = Screen.WIDTH_BIG.toFloat() / Screen.WIDTH.toFloat()
+        fun toHud(pos: Float) = pos * ratio
     }
 }

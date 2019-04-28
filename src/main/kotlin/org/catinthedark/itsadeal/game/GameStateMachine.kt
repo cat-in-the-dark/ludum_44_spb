@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.lib.managed
@@ -16,6 +17,7 @@ enum class States {
 
 class GameStateMachine(
     private val stage: Stage,
+    private val hud: Stage,
     private val am: AssetManager
 ) {
     private lateinit var personTextures: PersonTextures
@@ -68,6 +70,15 @@ class GameStateMachine(
         }
     }
 
+    private fun drawQuestions() {
+        hud.batch.managed {
+            am.at<BitmapFont>(Assets.Names.FONT_BIG).draw(it, "Все как договаривались?", 0f, Const.Projection.toHud(130f))
+            am.at<BitmapFont>(Assets.Names.FONT_SMALL).draw(it, "Похоже у вас сегодня удачный день. Я обычно очень занят", 0f, Const.Projection.toHud(120f))
+            am.at<BitmapFont>(Assets.Names.FONT_BIG).draw(it, "Вы торопитесь?", 0f, Const.Projection.toHud(110f))
+            am.at<BitmapFont>(Assets.Names.FONT_BIG).draw(it, "Передать привет жене?", 0f, Const.Projection.toHud(90f))
+        }
+    }
+
     private fun renderWithMan() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             personTextures = RandomPersonTextures()
@@ -86,6 +97,7 @@ class GameStateMachine(
 
             it.draw(am.at<Texture>(personTextures.shlapa), 0f, 0f)
         }
+        drawQuestions()
     }
 
     fun onExit() {
@@ -95,7 +107,7 @@ class GameStateMachine(
 
 class InputAdapterHolder(
     private val stage: Stage
-): InputAdapter() {
+) : InputAdapter() {
     var isMouseClicked = false
     var mouseX: Int = -1
     var mouseY: Int = -1
