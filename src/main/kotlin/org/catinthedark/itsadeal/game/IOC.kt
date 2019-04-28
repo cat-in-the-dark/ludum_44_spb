@@ -1,7 +1,9 @@
 package org.catinthedark.itsadeal.game
 
+import java.util.concurrent.ConcurrentHashMap
+
 object IOC {
-    private val container: MutableMap<String, Any?> = hashMapOf()
+    private val container: ConcurrentHashMap<String, Any?> = ConcurrentHashMap()
 
     fun put(name: String, obj: Any) {
         container[name] = obj
