@@ -19,5 +19,9 @@ object Const {
     object Balance {
         const val START_MONEY = 150
         const val SKIP_COST = 50
+
+        fun generateReward(): Int {
+            return (200..400).random()
+        }
     }
 }

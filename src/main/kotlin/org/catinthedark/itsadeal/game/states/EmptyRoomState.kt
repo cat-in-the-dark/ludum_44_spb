@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.lib.Deffer
@@ -34,6 +35,8 @@ class EmptyRoomState(
             it.draw(am.at<Texture>(Assets.Names.STOL), 0f, 0f)
             it.draw(am.at<Texture>(Assets.Names.RUKI), 0f, 0f)
         }
+
+        moneyHud(stage, hud, am)
     }
 
     override fun onExit() {

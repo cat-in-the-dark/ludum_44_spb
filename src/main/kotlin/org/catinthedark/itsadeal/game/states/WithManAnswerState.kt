@@ -48,6 +48,7 @@ class WithManAnswerState(
             am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
                 .draw(it, "Ясно", Const.Projection.toHud(112f), Const.Projection.toHud(26f))
         }
+        moneyHud(stage, hud, am)
 
         okBtn.update()
     }

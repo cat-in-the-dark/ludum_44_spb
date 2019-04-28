@@ -15,7 +15,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader
 object Assets {
     private const val RUSSIAN_CHARACTERS = DEFAULT_CHARS +
         "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
-        "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+        "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" +
+        "$"
 
 
     fun load(): AssetManager {

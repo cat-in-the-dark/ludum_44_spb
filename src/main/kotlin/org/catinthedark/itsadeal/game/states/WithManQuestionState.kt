@@ -76,6 +76,7 @@ class WithManQuestionState(
 
             it.draw(am.at<Texture>(Assets.Names.MENU), 0f, 0f)
         }
+        moneyHud(stage, hud, am)
 
         if (askedQuestions < maxAskedQuestions) {
             val questionMap = person.getQuestions(3)

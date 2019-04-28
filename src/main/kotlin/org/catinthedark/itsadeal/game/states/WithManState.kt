@@ -54,6 +54,8 @@ class WithManState(
             it.draw(am.at<Texture>(personTextures.shlapa), 0f, 0f)
         }
 
+        moneyHud(stage, hud, am)
+
         personBtn.update()
         docBtn.update()
     }

@@ -18,15 +18,18 @@ class ProfitState(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     override fun onActivate() {
-        val money = 100 // TODO: get from person
-        IOC.put("money", IOC.atOr("money", 0) + money)
+        val reward = IOC.atOr("reward", 0)
+        val money = IOC.atOr("money", 0)
+        IOC.put("money", money + reward)
         am.at<Sound>(Assets.Names.Sounds.PROFIT).play()
     }
 
     override fun onUpdate() {
+        val reward = IOC.atOr("reward", 0)
+
         hud.batch.managed {
             am.at<BitmapFont>(Assets.Names.FONT_BIG)
-                .draw(it, "ПРОФИТ +100", 77f, Const.Projection.toHud(128f))
+                .draw(it, "ПРОФИТ +$reward", 77f, Const.Projection.toHud(128f))
             am.at<BitmapFont>(Assets.Names.FONT_BIG)
                 .draw(it, "БАЛАНС = ${IOC.atOr("money", 0)}", Const.Projection.toHud(77f), Const.Projection.toHud(16f))
         }

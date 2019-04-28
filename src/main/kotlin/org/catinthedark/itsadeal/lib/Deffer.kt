@@ -23,7 +23,11 @@ class Deffer {
             it.value.time -= time
 
             if (it.value.time <= 0) {
-                it.value.func()
+                try {
+                    it.value.func()
+                } catch (e: Exception) {
+                    log.error("Can't call deffer func: ${e.message}", e)
+                }
                 log.info("remove func from deffer at ${Thread.currentThread().name}")
                 funcs.remove(it.key)
             }
