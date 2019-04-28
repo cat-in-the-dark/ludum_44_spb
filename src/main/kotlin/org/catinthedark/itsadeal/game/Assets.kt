@@ -48,6 +48,12 @@ object Assets {
                 fontParameters.color = Color.BLACK
                 fontFileName = "fonts/cyrfont.ttf"
             })
+            load(Names.FONT_SMALL_WHITE, BitmapFont::class.java, FreetypeFontLoader.FreeTypeFontLoaderParameter().apply {
+                fontParameters.size = 20
+                fontParameters.characters = RUSSIAN_CHARACTERS
+                fontParameters.color = Color.WHITE
+                fontFileName = "fonts/cyrfont.ttf"
+            })
         }
     }
 
@@ -56,6 +62,7 @@ object Assets {
         val FONT_BIG = "font_big.ttf"
         val FONT_SMALL = "font_small.ttf"
         val FONT_SMALL_BLACK = "font_small_black.ttf"
+        val FONT_SMALL_WHITE = "font_small_white.ttf"
         val LOGO = "textures/logo.png"
         val TITLE = "textures/title.png"
         val STOL = "textures/STOL.png"
@@ -64,6 +71,9 @@ object Assets {
         val DOCUMENT = "textures/document.png"
         val ROOM = "textures/KOMANTA.png"
         val MENU = "textures/MENU.png"
+        val BUTTON = "textures/Button.png"
+        val BUTTON_SMALL = "textures/Button_small.png"
+        val PROGRESS_BAR = "textures/PLASHKA.png"
 
         val textures = listOf(
             LOGO,
@@ -73,7 +83,10 @@ object Assets {
             RUKI,
             DOCUMENT,
             ROOM,
-            MENU
+            MENU,
+            BUTTON,
+            BUTTON_SMALL,
+            PROGRESS_BAR
         )
 
         object Sounds {

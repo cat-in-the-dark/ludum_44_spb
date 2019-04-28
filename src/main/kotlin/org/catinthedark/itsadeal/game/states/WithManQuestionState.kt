@@ -99,8 +99,8 @@ class WithManQuestionState(
             am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK).draw(
                 it,
                 noQuestions,
-                Const.Projection.toHud(60f),
-                Const.Projection.toHud(46f)
+                Const.Projection.toHud(94f),
+                Const.Projection.toHud(28f)
             )
         }
     }

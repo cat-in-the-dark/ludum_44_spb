@@ -13,7 +13,7 @@ class WithManAnswerState(
     private val hud: Stage,
     private val am: AssetManager
 ) : IState {
-    private val okBtn = Button(112, 10, 144, 26, onClick = {
+    private val okBtn = Button(101, 16, 138, 29, onClick = {
         // Ok button
         IOC.put("state", States.WITH_MAN_QUESTION)
     })
@@ -38,6 +38,8 @@ class WithManAnswerState(
             it.draw(am.at<Texture>(personTextures.shlapa), 0f, 0f)
 
             it.draw(am.at<Texture>(Assets.Names.MENU), 0f, 0f)
+
+            it.draw(am.at<Texture>(Assets.Names.BUTTON_SMALL), 98f, 16f)
         }
 
         // TODO: draw inside menu
@@ -45,7 +47,7 @@ class WithManAnswerState(
             am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
                 .draw(it, IOC.atOr("current_answer", ""), Const.Projection.toHud(60f), Const.Projection.toHud(46f))
 
-            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
+            am.at<BitmapFont>(Assets.Names.FONT_SMALL_WHITE)
                 .draw(it, "Ясно", Const.Projection.toHud(112f), Const.Projection.toHud(26f))
         }
         moneyHud(stage, hud, am)
