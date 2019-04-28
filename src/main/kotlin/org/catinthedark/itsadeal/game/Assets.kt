@@ -68,8 +68,12 @@ object Assets {
             val HOVER = "sounds/Chose.mp3"
             val REJECT_DOC = "sounds/Doc_reject.mp3"
             val ACCEPT_DOC = "sounds/Doc_sign.mp3"
+            val JAIL = "sounds/arrest_lock.mp3"
+            val PROFIT = "sounds/Score_add.mp3"
+            val UNPROFIT = "sounds/Score_min.mp3"
+            val ACHIEVE = "sounds/Score_achive.mp3"
 
-            val all = listOf(NEXT, HOVER, REJECT_DOC, ACCEPT_DOC)
+            val all = listOf(NEXT, HOVER, REJECT_DOC, ACCEPT_DOC, JAIL, PROFIT, UNPROFIT, ACHIEVE)
         }
 
         //

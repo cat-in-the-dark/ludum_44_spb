@@ -7,7 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.Assets
 import org.catinthedark.itsadeal.game.IOC
 import org.catinthedark.itsadeal.game.at
+import org.catinthedark.itsadeal.game.atOrFail
+import org.catinthedark.itsadeal.game.questionary.Person
 import org.catinthedark.itsadeal.game.ui.Button
+import org.catinthedark.itsadeal.lib.Deffer
 import org.catinthedark.itsadeal.lib.managed
 import org.slf4j.LoggerFactory
 
@@ -23,8 +26,16 @@ class DocumentReviewState(
         am.at<Sound>(Assets.Names.Sounds.HOVER).play()
     })
     private val acceptButton = Button(200, 5, 255, 20, {
-        IOC.put("state", States.PROFIT)
         am.at<Sound>(Assets.Names.Sounds.ACCEPT_DOC).play()
+        val p = IOC.atOrFail<Person>("person")
+
+        IOC.atOrFail<Deffer>("deffer").register(0.5f) {
+            if (p.isEvil) {
+                IOC.put("state", States.FAIL)
+            } else {
+                IOC.put("state", States.PROFIT)
+            }
+        }
     })
     private val rejectButton = Button(10, 5, 55, 20, {
         IOC.put("state", States.SKIP)

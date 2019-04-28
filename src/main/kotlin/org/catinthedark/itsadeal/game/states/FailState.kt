@@ -3,6 +3,7 @@ package org.catinthedark.itsadeal.game.states
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.Assets
@@ -20,7 +21,7 @@ class FailState(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     override fun onActivate() {
-
+        am.at<Sound>(Assets.Names.Sounds.JAIL).play()
     }
 
     override fun onUpdate() {

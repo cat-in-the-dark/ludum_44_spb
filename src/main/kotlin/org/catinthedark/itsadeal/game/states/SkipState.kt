@@ -3,6 +3,7 @@ package org.catinthedark.itsadeal.game.states
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
@@ -19,6 +20,7 @@ class SkipState(
 
     override fun onActivate() {
         IOC.put("money", IOC.atOr("money", 0) - Const.Balance.SKIP_COST)
+        am.at<Sound>(Assets.Names.Sounds.UNPROFIT).play()
         if (isBankrot()) {
             IOC.at<Deffer>("deffer")?.register(3f) {
                 IOC.put("state", States.BANKROT)

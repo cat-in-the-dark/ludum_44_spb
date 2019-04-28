@@ -16,7 +16,7 @@ class BankrotState(
     private val stage: Stage,
     private val hud: Stage,
     private val am: AssetManager
-): IState {
+) : IState {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     override fun onActivate() {

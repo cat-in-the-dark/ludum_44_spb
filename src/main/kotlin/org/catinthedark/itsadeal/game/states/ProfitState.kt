@@ -3,6 +3,7 @@ package org.catinthedark.itsadeal.game.states
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
@@ -19,6 +20,7 @@ class ProfitState(
     override fun onActivate() {
         val money = 100 // TODO: get from person
         IOC.put("money", IOC.atOr("money", 0) + money)
+        am.at<Sound>(Assets.Names.Sounds.PROFIT).play()
     }
 
     override fun onUpdate() {

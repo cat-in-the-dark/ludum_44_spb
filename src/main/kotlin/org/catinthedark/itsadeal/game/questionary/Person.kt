@@ -5,10 +5,11 @@ import org.catinthedark.itsadeal.game.exceptions.InvalidFractionException
 import org.slf4j.LoggerFactory
 
 class Person(
-    private val isEvil: Boolean,
+    val isEvil: Boolean,
     //todo: handle evil man
     private val incriminatingPart: Float
 ) {
+
 
     private val log = LoggerFactory.getLogger(Person::class.java)
     private val questionPool = QuestionPool()
@@ -57,9 +58,5 @@ class Person(
         questions.remove(answer.key)
         val newQuestion = questionPool.getQuestion(answeredQuestionType)
         questions[newQuestion.first] = newQuestion.second
-    }
-
-    fun getIsEvil(): Boolean {
-        return isEvil
     }
 }
