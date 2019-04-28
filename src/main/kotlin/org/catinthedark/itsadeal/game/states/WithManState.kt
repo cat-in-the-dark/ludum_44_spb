@@ -39,9 +39,8 @@ class WithManState(
 
     override fun onUpdate() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            generatePerson()
-
             if (pin == 111) {
+                generatePerson()
                 IOC.put("money", IOC.atOr("money", 0) + Const.Balance.generateReward(IOC.atOr("money", 0)))
             }
         }
