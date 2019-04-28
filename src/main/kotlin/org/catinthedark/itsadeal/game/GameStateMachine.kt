@@ -17,6 +17,8 @@ class GameStateMachine(
     private val states = mapOf(
         States.EMPTY_ROOM to EmptyRoomState(stage, hud, am),
         States.WITH_MAN to WithManState(stage, hud, am),
+        States.WITH_MAN_QUESTION to WithManQuestionState(stage, hud, am),
+        States.WITH_MAN_ANSWER to WithManAnswerState(stage, hud, am),
         States.DOCUMENT_REVIEW to DocumentReviewState(stage, hud, am),
         States.FAIL to FailState(stage, hud, am),
         States.PROFIT to ProfitState(stage, hud, am),

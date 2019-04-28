@@ -12,16 +12,22 @@ class Button(
     private val onClick: () -> Unit = {},
     private val onHover: () -> Unit = {}
 ) {
+    var isClicked: Boolean = false
+        private set
+
+
     fun isHover(x: Int, y: Int): Boolean {
         return x >= xMin && x <= xMax && y >= yMin && y <= yMax
     }
 
     fun update() {
+        isClicked = false
         val inputs: InputAdapterHolder = IOC.at("inputs") ?: return
         if (isHover(inputs.mouseX, inputs.mouseY)) {
             onHover()
             if (inputs.isMouseClicked) {
                 onClick()
+                isClicked = true
             }
         }
     }
