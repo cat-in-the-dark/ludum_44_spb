@@ -2,6 +2,7 @@ package org.catinthedark.itsadeal.game.states
 
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.game.ui.Button
@@ -12,16 +13,10 @@ class WithManAnswerState(
     private val hud: Stage,
     private val am: AssetManager
 ) : IState {
-    private val okBtn = Button(0, 0, 1, 1) {
+    private val okBtn = Button(112, 10, 144, 26, onClick = {
         // Ok button
         IOC.put("state", States.WITH_MAN_QUESTION)
-    }
-
-    private val anyBtn = Button(0, 0, 144, 256) {
-        if (!okBtn.isClicked) {
-            IOC.put("state", States.WITH_MAN)
-        }
-    }
+    })
 
 
     override fun onActivate() {
@@ -45,8 +40,16 @@ class WithManAnswerState(
             it.draw(am.at<Texture>(Assets.Names.MENU), 0f, 0f)
         }
 
+        // TODO: draw inside menu
+        hud.batch.managed {
+            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
+                .draw(it, IOC.atOr("current_answer", ""), Const.Projection.toHud(60f), Const.Projection.toHud(46f))
+
+            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
+                .draw(it, "Ясно", Const.Projection.toHud(112f), Const.Projection.toHud(26f))
+        }
+
         okBtn.update()
-        anyBtn.update()
     }
 
     override fun onExit() {

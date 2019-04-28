@@ -2,34 +2,66 @@ package org.catinthedark.itsadeal.game.states
 
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
+import org.catinthedark.itsadeal.game.exceptions.InvalidAnswerException
+import org.catinthedark.itsadeal.game.questionary.Person
+import org.catinthedark.itsadeal.game.questionary.insertPeriodically
 import org.catinthedark.itsadeal.game.ui.Button
 import org.catinthedark.itsadeal.lib.managed
+import org.slf4j.LoggerFactory
 
 class WithManQuestionState(
     private val stage: Stage,
     private val hud: Stage,
     private val am: AssetManager
 ) : IState {
+    private val log = LoggerFactory.getLogger(WithManState::class.java)
     private val buttons = listOf(
-        Button(0,0,1,1) { // First
-            IOC.put("state", States.WITH_MAN_ANSWER)
-        },
-        Button(0,0,1,1) { // Second
-            IOC.put("state", States.WITH_MAN_ANSWER)
-        },
-        Button(0,0,1,1) { // Third
-            IOC.put("state", States.WITH_MAN_ANSWER)
-        }
+        Button(60, 34, 190, 46, onClick = {
+            // First
+            answer(0)
+        }),
+        Button(60, 22, 190, 34, onClick = {
+            // Second
+            answer(1)
+        }),
+        Button(60, 8, 190, 22, onClick = {
+            // Third
+            answer(2)
+        })
     )
+    private val maxAskedQuestions = 3
+    private val noQuestions = "Вопросов больше нет."
 
     override fun onActivate() {
 
     }
 
+    private fun answer(questionIndex: Int) {
+        val person = IOC.atOrFail<Person>("person")
+        val questionMap = person.getQuestions(3)
+        val questionList = questionMap.map { it.key }
+        val askedQuestions = IOC.atOr("askedQuestions", 0)
+
+        if (askedQuestions >= maxAskedQuestions) return
+
+        val answer = questionMap[questionList[questionIndex]]
+            ?: throw InvalidAnswerException("No answer at $questionIndex")
+
+        log.info("Got answer: $answer")
+
+        person.setAnswer(questionMap.filterKeys { it == questionList[questionIndex] }.entries.first())
+        IOC.put("current_answer", answer)
+        IOC.put("askedQuestions", IOC.atOr("askedQuestions", 0) + 1)
+        IOC.put("state", States.WITH_MAN_ANSWER)
+    }
+
     override fun onUpdate() {
         val personTextures = IOC.atOrFail<PersonTextures>("personTextures")
+        val person = IOC.atOrFail<Person>("person")
+        val askedQuestions = IOC.atOr("askedQuestions", 0)
 
         stage.batch.managed {
             it.draw(am.at<Texture>(Assets.Names.ROOM), 0f, 0f)
@@ -45,13 +77,60 @@ class WithManQuestionState(
             it.draw(am.at<Texture>(Assets.Names.MENU), 0f, 0f)
         }
 
+        if (askedQuestions < maxAskedQuestions) {
+            val questionMap = person.getQuestions(3)
+            val questionList = questionMap.map { it.key }
+            drawQuestions(questionList)
+        } else {
+            drawNoQuestions()
+        }
+
         buttons.forEach { it.update() }
 
-        showQuestions()
+        val inputs = IOC.atOrFail<InputAdapterHolder>("inputs")
+        if (inputs.isMouseClicked && !buttons.any { it.isClicked }) {
+            IOC.put("state", States.WITH_MAN)
+        }
     }
 
-    private fun showQuestions() {
+    private fun drawNoQuestions() {
+        hud.batch.managed {
+            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK).draw(
+                it,
+                noQuestions,
+                Const.Projection.toHud(60f),
+                Const.Projection.toHud(46f)
+            )
+        }
+    }
 
+    private fun drawQuestions(questions: List<String>) {
+        stage.batch.managed {
+            it.draw(am.at<Texture>(Assets.Names.MENU), 0f, 0f)
+        }
+        hud.batch.managed {
+            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
+                .draw(
+                    it,
+                    "- ${questions[0].insertPeriodically("\n", 40)}",
+                    Const.Projection.toHud(60f),
+                    Const.Projection.toHud(46f)
+                )
+            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
+                .draw(
+                    it,
+                    "- ${questions[1].insertPeriodically("\n", 40)}",
+                    Const.Projection.toHud(60f),
+                    Const.Projection.toHud(34f)
+                )
+            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
+                .draw(
+                    it,
+                    "- ${questions[2].insertPeriodically("\n", 40)}",
+                    Const.Projection.toHud(60f),
+                    Const.Projection.toHud(22f)
+                )
+        }
     }
 
     override fun onExit() {
