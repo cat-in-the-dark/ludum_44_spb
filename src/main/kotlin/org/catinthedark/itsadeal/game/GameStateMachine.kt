@@ -5,12 +5,9 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.states.DocumentReviewState
 import org.catinthedark.itsadeal.game.states.EmptyRoomState
+import org.catinthedark.itsadeal.game.states.States
 import org.catinthedark.itsadeal.game.states.WithManState
 import org.slf4j.LoggerFactory
-
-enum class States {
-    NONE, EMPTY_ROOM, WITH_MAN, DOCUMENT_REVIEW
-}
 
 class GameStateMachine(
     private val stage: Stage,
