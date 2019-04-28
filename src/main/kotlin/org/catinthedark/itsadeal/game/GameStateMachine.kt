@@ -29,6 +29,8 @@ class GameStateMachine(
         Gdx.input.inputProcessor = inputs
         IOC.put("inputs", inputs)
         IOC.put("state", States.EMPTY_ROOM)
+        IOC.put("money", Const.Balance.START_MONEY)
+        IOC.put("isGameOver", false)
     }
 
 

@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport
 import org.catinthedark.itsadeal.game.screens.GameScreen
 import org.catinthedark.itsadeal.game.screens.SplashScreen
 import org.catinthedark.itsadeal.game.screens.TitleScreen
+import org.catinthedark.itsadeal.lib.Deffer
 import org.catinthedark.itsadeal.lib.RouteMachine
 
 class ItsaDealGame : Game() {
@@ -44,6 +45,8 @@ class ItsaDealGame : Game() {
         rm.addRoute(title) { game }
         rm.addRoute(game) { title }
         rm.start(splash, Unit)
+
+        IOC.put("deffer", Deffer())
     }
 
     override fun render() {
@@ -58,6 +61,7 @@ class ItsaDealGame : Game() {
         hud.act(Gdx.graphics.deltaTime)
         hud.batch.projectionMatrix = hud.viewport.camera.combined
 
+        IOC.at<Deffer>("deffer")?.update(Gdx.graphics.deltaTime)
         rm.run(Gdx.graphics.deltaTime)
         stage.draw()
         hud.draw()

@@ -1,6 +1,7 @@
 package org.catinthedark.itsadeal.game.states
 
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.Assets
@@ -19,14 +20,17 @@ class DocumentReviewState(
 
     private val backButton = Button(10, 110, 55, 136, {
         IOC.put("state", States.WITH_MAN)
+        am.at<Sound>(Assets.Names.Sounds.HOVER).play()
     })
     private val acceptButton = Button(200, 5, 255, 20, {
         IOC.put("state", States.PROFIT)
+        am.at<Sound>(Assets.Names.Sounds.ACCEPT_DOC).play()
     })
-    private val declineButton = Button(10, 5, 55, 20, {
+    private val rejectButton = Button(10, 5, 55, 20, {
         IOC.put("state", States.SKIP)
+        am.at<Sound>(Assets.Names.Sounds.REJECT_DOC).play()
     })
-    private val buttons = listOf(backButton, acceptButton, declineButton)
+    private val buttons = listOf(backButton, acceptButton, rejectButton)
 
 
     override fun onActivate() {
