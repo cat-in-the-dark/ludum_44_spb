@@ -11,6 +11,7 @@ import org.catinthedark.itsadeal.game.exceptions.InvalidAnswerException
 import org.catinthedark.itsadeal.game.questionary.Person
 import org.catinthedark.itsadeal.game.questionary.insertPeriodically
 import org.catinthedark.itsadeal.game.ui.Button
+import org.catinthedark.itsadeal.lib.Deffer
 import org.catinthedark.itsadeal.lib.managed
 import org.slf4j.LoggerFactory
 
@@ -22,6 +23,9 @@ class WithManState(
     private val log = LoggerFactory.getLogger(WithManState::class.java)
 
     private var pin = 0
+
+    private var blink = false
+    private var localDeffer: Deffer? = null
 
     private val personBtn = Button(96, 54, 144, 128, onClick = {
         // Ok button
@@ -35,6 +39,18 @@ class WithManState(
 
     override fun onActivate() {
         pin = 0
+        localDeffer = Deffer()
+        doBlink()
+    }
+
+    private fun doBlink() {
+        localDeffer?.register(listOf(1f, 1.2f, 1.8f, 2f, 3f).random()) {
+            blink = true
+            localDeffer?.register(0.3f) {
+                blink = false
+                doBlink()
+            }
+        }
     }
 
     override fun onUpdate() {
@@ -64,7 +80,11 @@ class WithManState(
             it.draw(am.at<Texture>(Assets.Names.RUKI), 0f, 0f)
             it.draw(am.at<Texture>(personTextures.golova), 0f, 0f)
 
-            it.draw(am.at<Texture>(personTextures.faces), 0f, 0f) // TODO: make kivok
+            if (blink) {
+                it.draw(am.at<Texture>(personTextures.faces), 0f, 0f)
+            } else {
+                it.draw(am.at<Texture>(personTextures.faces), 0f, 1f)
+            }
 
             it.draw(am.at<Texture>(personTextures.shlapa), 0f, 0f)
             it.draw(am.at<Texture>(Assets.Names.DOCUMENT_LEJIT), 0f, 0f)
@@ -74,10 +94,11 @@ class WithManState(
 
         personBtn.update()
         docBtn.update()
+        localDeffer?.update(Gdx.graphics.deltaTime)
     }
 
     override fun onExit() {
-
+        localDeffer = null
     }
 
 }
