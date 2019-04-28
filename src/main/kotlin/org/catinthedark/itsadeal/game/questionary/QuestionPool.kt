@@ -51,6 +51,27 @@ class QuestionPool {
                 TemplateString("Да, я всё перепроверил"),
                 TemplateString("У нас всё точно")
             )
+        ),
+        Pair(
+            TemplateString("Как поживает Овсянников? Передавайте привет от меня"),
+            Pair(
+                TemplateString("Овсянников чувствует себя прекрасно"),
+                TemplateString("Давно его не видел")
+            )
+        ),
+        Pair(
+            TemplateString("День только начинается, а я уже устал"),
+            Pair(
+                TemplateString("Я тоже устал"),
+                TemplateString("Надеюсь ваше настроение скоро изменится")
+            )
+        ),
+        Pair(
+            TemplateString("Я не уверен"),
+            Pair(
+                TemplateString("Мы готовы вносить правки"),
+                TemplateString("%s же договаривались", "Решайтесь, мы", "Мы")
+            )
         )
     )
 

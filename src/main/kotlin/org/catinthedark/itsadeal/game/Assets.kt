@@ -26,6 +26,7 @@ object Assets {
             Names.FACES.forEach { load(it, Texture::class.java) }
             Names.SHLAPY.forEach { load(it, Texture::class.java) }
             Names.GOLOVA.forEach { load(it, Texture::class.java) }
+            Names.DOCUMENTS.forEach { load(it, Texture::class.java) }
             Names.Sounds.all.forEach { load(it, Sound::class.java) }
             load(Names.Sounds.MUSIC, Music::class.java)
 
@@ -42,11 +43,20 @@ object Assets {
                 fontParameters.characters = RUSSIAN_CHARACTERS
                 fontFileName = "fonts/cyrfont.ttf"
             })
-            load(Names.FONT_SMALL_BLACK, BitmapFont::class.java, FreetypeFontLoader.FreeTypeFontLoaderParameter().apply {
-                fontParameters.size = 20
+            load(
+                Names.FONT_SMALL_BLACK,
+                BitmapFont::class.java,
+                FreetypeFontLoader.FreeTypeFontLoaderParameter().apply {
+                    fontParameters.size = 20
+                    fontParameters.characters = RUSSIAN_CHARACTERS
+                    fontParameters.color = Color.BLACK
+                    fontFileName = "fonts/cyrfont.ttf"
+                })
+            load(Names.FONT_BIG_SERIF, BitmapFont::class.java, FreetypeFontLoader.FreeTypeFontLoaderParameter().apply {
+                fontParameters.size = 54
                 fontParameters.characters = RUSSIAN_CHARACTERS
                 fontParameters.color = Color.BLACK
-                fontFileName = "fonts/cyrfont.ttf"
+                fontFileName = "fonts/cyrillic_pixel.ttf"
             })
             load(Names.FONT_SMALL_WHITE, BitmapFont::class.java, FreetypeFontLoader.FreeTypeFontLoaderParameter().apply {
                 fontParameters.size = 20
@@ -54,6 +64,15 @@ object Assets {
                 fontParameters.color = Color.WHITE
                 fontFileName = "fonts/cyrfont.ttf"
             })
+            load(
+                Names.FONT_MEDIUM_BLACK,
+                BitmapFont::class.java,
+                FreetypeFontLoader.FreeTypeFontLoaderParameter().apply {
+                    fontParameters.size = 32
+                    fontParameters.characters = RUSSIAN_CHARACTERS
+                    fontParameters.color = Color.BLACK
+                    fontFileName = "fonts/cyrfont.ttf"
+                })
         }
     }
 
@@ -63,12 +82,15 @@ object Assets {
         val FONT_SMALL = "font_small.ttf"
         val FONT_SMALL_BLACK = "font_small_black.ttf"
         val FONT_SMALL_WHITE = "font_small_white.ttf"
+        val FONT_MEDIUM_BLACK = "font_medium_black.ttf"
+        val FONT_BIG_SERIF = "font_big_serif.ttf"
         val LOGO = "textures/logo.png"
         val TITLE = "textures/title.png"
         val STOL = "textures/STOL.png"
         val BODY01 = "textures/BODY01.png"
         val RUKI = "textures/RUKI.png"
         val DOCUMENT = "textures/document.png"
+        val DOCUMENT_LEJIT = "textures/DOCMENT_lejit.png"
         val ROOM = "textures/KOMANTA.png"
         val MENU = "textures/MENU.png"
         val BUTTON = "textures/Button.png"
@@ -82,6 +104,7 @@ object Assets {
             BODY01,
             RUKI,
             DOCUMENT,
+            DOCUMENT_LEJIT,
             ROOM,
             MENU,
             BUTTON,
@@ -131,6 +154,13 @@ object Assets {
             "textures/GOLOVA/GOLOVA4.png",
             "textures/GOLOVA/GOLOVA5.png",
             "textures/GOLOVA/GOLOVA6.png"
+        )
+
+        val DOCUMENTS = listOf(
+            "textures/DOCUMENT/DOCUMENT1.png",
+            "textures/DOCUMENT/DOCUMENT2.png",
+            "textures/DOCUMENT/DOCUMENT3.png",
+            "textures/DOCUMENT/DOCUMENT4.png"
         )
     }
 }

@@ -3,12 +3,13 @@ package org.catinthedark.itsadeal.game.states
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.scenes.scene2d.Stage
-import org.catinthedark.itsadeal.game.Assets
-import org.catinthedark.itsadeal.game.IOC
-import org.catinthedark.itsadeal.game.at
-import org.catinthedark.itsadeal.game.atOrFail
+import org.catinthedark.itsadeal.game.*
+import org.catinthedark.itsadeal.game.exceptions.InvalidDocumentException
 import org.catinthedark.itsadeal.game.questionary.Person
+import org.catinthedark.itsadeal.game.questionary.insertPeriodically
 import org.catinthedark.itsadeal.game.ui.Button
 import org.catinthedark.itsadeal.lib.Deffer
 import org.catinthedark.itsadeal.lib.managed
@@ -63,7 +64,36 @@ class DocumentReviewState(
 
 //            it.draw(am.at<Texture>(personTextures.shlapa), 0f, 0f)
 
+            it.draw(am.at<Texture>(IOC.atOrFail("docTexture")), 0f, 0f)
             it.draw(am.at<Texture>(Assets.Names.DOCUMENT), 0f, 0f)
+        }
+
+        drawDocContents()
+    }
+
+    private fun drawDocContents() {
+        val docContents = IOC.atOrFail<List<String>>("docContents")
+        if (docContents.size < 3) {
+            throw InvalidDocumentException()
+        }
+
+        hud.batch.managed {
+            val header = docContents[0].toUpperCase().insertPeriodically("\n", 10)
+            val subheader = docContents[1].insertPeriodically("\n", 16)
+            val text = docContents[2].insertPeriodically("\n", 20)
+            val layout = GlyphLayout(am.at<BitmapFont>(Assets.Names.FONT_BIG_SERIF), header)
+            am.at<BitmapFont>(Assets.Names.FONT_BIG_SERIF)
+                .draw(
+                    it,
+                    header,
+                    Const.Projection.toHud(128f - (layout.width / 2) / Const.Projection.ratio),
+                    Const.Projection.toHud(132f)
+                )
+            logger.info("${layout.width}")
+            am.at<BitmapFont>(Assets.Names.FONT_MEDIUM_BLACK)
+                .draw(it, subheader, Const.Projection.toHud(90f), Const.Projection.toHud(107f))
+            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
+                .draw(it, text, Const.Projection.toHud(90f), Const.Projection.toHud(90f))
         }
     }
 

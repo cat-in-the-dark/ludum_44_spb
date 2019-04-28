@@ -52,6 +52,7 @@ class WithManState(
             it.draw(am.at<Texture>(personTextures.faces), 0f, 0f) // TODO: make kivok
 
             it.draw(am.at<Texture>(personTextures.shlapa), 0f, 0f)
+            it.draw(am.at<Texture>(Assets.Names.DOCUMENT_LEJIT), 0f, 0f)
         }
 
         moneyHud(stage, hud, am)
