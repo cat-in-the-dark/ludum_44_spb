@@ -1,10 +1,9 @@
 package org.catinthedark.itsadeal.game.screens
 
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.scenes.scene2d.Stage
-import org.catinthedark.itsadeal.game.GameStateMachine
-import org.catinthedark.itsadeal.game.IOC
-import org.catinthedark.itsadeal.game.atOr
+import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.lib.YieldUnit
 
 class GameScreen(private val stage: Stage, private val hud: Stage) : YieldUnit<AssetManager, AssetManager> {
@@ -14,6 +13,10 @@ class GameScreen(private val stage: Stage, private val hud: Stage) : YieldUnit<A
     override fun onActivate(data: AssetManager) {
         am = data
         gameState = GameStateMachine(stage, hud, am)
+
+        val m = am.at<Music>(Assets.Names.Sounds.MUSIC)
+        m.isLooping = true
+        m.play()
     }
 
     override fun run(delta: Float): AssetManager? {
@@ -26,5 +29,6 @@ class GameScreen(private val stage: Stage, private val hud: Stage) : YieldUnit<A
 
     override fun onExit() {
         gameState.onExit()
+        am.at<Music>(Assets.Names.Sounds.MUSIC).stop()
     }
 }

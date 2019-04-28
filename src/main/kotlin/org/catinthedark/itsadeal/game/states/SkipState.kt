@@ -37,7 +37,7 @@ class SkipState(
         }
 
         if (!isBankrot()) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || IOC.atOrFail<InputAdapterHolder>("inputs").isMouseClicked) {
                 IOC.put("state", States.EMPTY_ROOM)
             }
         }

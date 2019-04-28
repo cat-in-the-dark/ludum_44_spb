@@ -5,10 +5,7 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
-import org.catinthedark.itsadeal.game.Assets
-import org.catinthedark.itsadeal.game.Const
-import org.catinthedark.itsadeal.game.IOC
-import org.catinthedark.itsadeal.game.at
+import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.lib.managed
 import org.slf4j.LoggerFactory
 
@@ -29,7 +26,7 @@ class BankrotState(
                 .draw(it, "БАНКРОТ", 77f, Const.Projection.toHud(128f))
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || IOC.atOrFail<InputAdapterHolder>("inputs").isMouseClicked) {
             IOC.put("state", States.EMPTY_ROOM)
             IOC.put("isGameOver", true)
         }

@@ -2,6 +2,7 @@ package org.catinthedark.itsadeal.game
 
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.DEFAULT_CHARS
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader
+import javax.naming.Name
 
 object Assets {
     private const val RUSSIAN_CHARACTERS = DEFAULT_CHARS +
@@ -24,6 +26,7 @@ object Assets {
             Names.SHLAPY.forEach { load(it, Texture::class.java) }
             Names.GOLOVA.forEach { load(it, Texture::class.java) }
             Names.Sounds.all.forEach { load(it, Sound::class.java) }
+            load(Names.Sounds.MUSIC, Music::class.java)
 
             val resolver = InternalFileHandleResolver()
             setLoader(FreeTypeFontGenerator::class.java, FreeTypeFontGeneratorLoader(resolver))
@@ -72,6 +75,7 @@ object Assets {
             val PROFIT = "sounds/Score_add.mp3"
             val UNPROFIT = "sounds/Score_min.mp3"
             val ACHIEVE = "sounds/Score_achive.mp3"
+            val MUSIC = "sounds/its_a_deal_music.mp3"
 
             val all = listOf(NEXT, HOVER, REJECT_DOC, ACCEPT_DOC, JAIL, PROFIT, UNPROFIT, ACHIEVE)
         }

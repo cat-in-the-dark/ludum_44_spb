@@ -38,14 +38,16 @@ class DocumentReviewState(
         }
     })
     private val rejectButton = Button(10, 5, 55, 20, {
-        IOC.put("state", States.SKIP)
         am.at<Sound>(Assets.Names.Sounds.REJECT_DOC).play()
+        IOC.atOrFail<Deffer>("deffer").register(0.5f) {
+            IOC.put("state", States.SKIP)
+        }
     })
     private val buttons = listOf(backButton, acceptButton, rejectButton)
 
 
     override fun onActivate() {
-//        personTextures = IOC.at("person") ?: throw Exception("There is no person!!")
+        am.at<Sound>(Assets.Names.Sounds.HOVER).play()
     }
 
     override fun onUpdate() {
