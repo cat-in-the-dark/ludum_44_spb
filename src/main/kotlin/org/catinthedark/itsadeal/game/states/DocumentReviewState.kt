@@ -89,7 +89,6 @@ class DocumentReviewState(
                     Const.Projection.toHud(128f - (layout.width / 2) / Const.Projection.ratio),
                     Const.Projection.toHud(132f)
                 )
-            logger.info("${layout.width}")
             am.at<BitmapFont>(Assets.Names.FONT_MEDIUM_BLACK)
                 .draw(it, subheader, Const.Projection.toHud(90f), Const.Projection.toHud(107f))
             am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
