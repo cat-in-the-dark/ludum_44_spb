@@ -48,7 +48,7 @@ class WithManAnswerState(
                 .draw(it, IOC.atOr("current_answer", ""), Const.Projection.toHud(60f), Const.Projection.toHud(46f))
 
             am.at<BitmapFont>(Assets.Names.FONT_SMALL_WHITE)
-                .draw(it, "Ясно", Const.Projection.toHud(112f), Const.Projection.toHud(26f))
+                .draw(it, "Ясно", Const.Projection.toHud(112f), Const.Projection.toHud(25f))
         }
         moneyHud(stage, hud, am)
 

@@ -19,15 +19,15 @@ class WithManQuestionState(
 ) : IState {
     private val log = LoggerFactory.getLogger(WithManState::class.java)
     private val buttons = listOf(
-        Button(60, 34, 190, 46, onClick = {
+        Button(60, 32, 190, 44, onClick = {
             // First
             answer(0)
         }),
-        Button(60, 22, 190, 34, onClick = {
+        Button(60, 20, 190, 32, onClick = {
             // Second
             answer(1)
         }),
-        Button(60, 8, 190, 22, onClick = {
+        Button(60, 8, 190, 20, onClick = {
             // Third
             answer(2)
         })
@@ -115,21 +115,21 @@ class WithManQuestionState(
                     it,
                     "- ${questions[0].insertPeriodically("\n", 40)}",
                     Const.Projection.toHud(60f),
-                    Const.Projection.toHud(46f)
+                    Const.Projection.toHud(44f)
                 )
             am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
                 .draw(
                     it,
                     "- ${questions[1].insertPeriodically("\n", 40)}",
                     Const.Projection.toHud(60f),
-                    Const.Projection.toHud(34f)
+                    Const.Projection.toHud(32f)
                 )
             am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
                 .draw(
                     it,
                     "- ${questions[2].insertPeriodically("\n", 40)}",
                     Const.Projection.toHud(60f),
-                    Const.Projection.toHud(22f)
+                    Const.Projection.toHud(20f)
                 )
         }
     }

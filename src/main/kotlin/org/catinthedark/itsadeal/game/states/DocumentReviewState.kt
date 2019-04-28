@@ -38,7 +38,7 @@ class DocumentReviewState(
             }
         }
     })
-    private val rejectButton = Button(10, 5, 55, 20, {
+    private val rejectButton = Button(10, 5, 70, 20, {
         am.at<Sound>(Assets.Names.Sounds.REJECT_DOC).play()
         IOC.atOrFail<Deffer>("deffer").register(0.5f) {
             IOC.put("state", States.SKIP)
