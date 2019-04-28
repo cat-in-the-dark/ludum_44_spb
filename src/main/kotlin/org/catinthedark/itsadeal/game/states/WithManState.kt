@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.game.exceptions.InvalidAnswerException
-import org.catinthedark.itsadeal.game.questionary.PersonFactory
+import org.catinthedark.itsadeal.game.questionary.Person
 import org.catinthedark.itsadeal.lib.managed
 import org.slf4j.LoggerFactory
 
@@ -21,11 +21,6 @@ class WithManState(
 
     private val noQuestions = "Вопросов больше нет."
 
-    private var personTextures: PersonTextures = RandomPersonTextures()
-    private var person = PersonFactory().getRandomPerson()
-    private val currentAnswerKey = "current_answer"
-
-    var askedQuestions = 0
     val maxAskedQuestions = 3
 
     override fun onActivate() {
@@ -34,13 +29,15 @@ class WithManState(
 
     override fun onUpdate() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            //TODO: move to onActivate (or in the IOC)
-            personTextures = RandomPersonTextures()
-            person = PersonFactory().getRandomPerson()
+            generatePerson()
         }
         if (IOC.at<InputAdapterHolder>("inputs")?.isMouseClicked == true) {
             IOC.put("state", States.DOCUMENT_REVIEW)
         }
+
+        val personTextures = IOC.atOrFail<PersonTextures>("personTextures")
+        val person = IOC.atOrFail<Person>("person")
+        var askedQuestions = IOC.atOr("askedQuestions", 0)
 
         stage.batch.managed {
             it.draw(am.at<Texture>(personTextures.body), 0f, 0f)
@@ -76,7 +73,7 @@ class WithManState(
                 log.info("Got answer: $answer")
 
                 person.setAnswer(questionMap.filterKeys { it == questionList[questionIndex] }.entries.first())
-                IOC.put(currentAnswerKey, answer)
+                IOC.put("current_answer", answer)
             }
         } else {
             drawNoQuestions()
@@ -84,8 +81,10 @@ class WithManState(
 
         hud.batch.managed {
             am.at<BitmapFont>(Assets.Names.FONT_BIG)
-                .draw(it, IOC.atOr(currentAnswerKey, ""), 0f, Const.Projection.toHud(10f))
+                .draw(it, IOC.atOr("current_answer", ""), 0f, Const.Projection.toHud(10f))
         }
+
+        IOC.put("askedQuestions", askedQuestions)
     }
 
     private fun drawNoQuestions() {

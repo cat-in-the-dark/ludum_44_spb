@@ -11,6 +11,7 @@ class Person(
 ) {
 
     private val log = LoggerFactory.getLogger(Person::class.java)
+    private val questionPool = QuestionPool()
 
     init {
         log.info("Got person, evil = $isEvil")
@@ -36,11 +37,11 @@ class Person(
             log.info("Incriminating: $incriminatingAnswers, neutral: $neutralAnswers")
 
             repeat(incriminatingAnswers) {
-                val question = QuestionPool.getQuestion(AnswerType.INCRIMINATING)
+                val question = questionPool.getQuestion(AnswerType.INCRIMINATING)
                 questions[question.first] = question.second
             }
             repeat(neutralAnswers) {
-                val question = QuestionPool.getQuestion(AnswerType.NEUTRAL)
+                val question = questionPool.getQuestion(AnswerType.NEUTRAL)
                 questions[question.first] = question.second
             }
 
@@ -54,7 +55,7 @@ class Person(
         val answeredQuestionType =
             questions[answer.key]?.type ?: throw InvalidAnswerException("Question marked as answered was not asked!")
         questions.remove(answer.key)
-        val newQuestion = QuestionPool.getQuestion(answeredQuestionType)
+        val newQuestion = questionPool.getQuestion(answeredQuestionType)
         questions[newQuestion.first] = newQuestion.second
     }
 

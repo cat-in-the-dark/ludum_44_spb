@@ -30,7 +30,7 @@ class EmptyRoomState(
     }
 
     override fun onExit() {
-
+        generatePerson()
     }
 
 }

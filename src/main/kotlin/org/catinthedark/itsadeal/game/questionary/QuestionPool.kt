@@ -2,7 +2,7 @@ package org.catinthedark.itsadeal.game.questionary
 
 import org.catinthedark.itsadeal.game.exceptions.NotEnoughQuestionsException
 
-object QuestionPool {
+class QuestionPool {
     /**
      * Map<String, Pair<String, String>> - question, neutral answer, incriminating answer
      */
