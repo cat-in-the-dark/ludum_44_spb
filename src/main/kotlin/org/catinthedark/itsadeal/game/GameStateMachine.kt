@@ -3,10 +3,7 @@ package org.catinthedark.itsadeal.game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.scenes.scene2d.Stage
-import org.catinthedark.itsadeal.game.states.DocumentReviewState
-import org.catinthedark.itsadeal.game.states.EmptyRoomState
-import org.catinthedark.itsadeal.game.states.States
-import org.catinthedark.itsadeal.game.states.WithManState
+import org.catinthedark.itsadeal.game.states.*
 import org.slf4j.LoggerFactory
 
 class GameStateMachine(
@@ -20,7 +17,10 @@ class GameStateMachine(
     private val states = mapOf(
         States.EMPTY_ROOM to EmptyRoomState(stage, hud, am),
         States.WITH_MAN to WithManState(stage, hud, am),
-        States.DOCUMENT_REVIEW to DocumentReviewState(stage, hud, am)
+        States.DOCUMENT_REVIEW to DocumentReviewState(stage, hud, am),
+        States.FAIL to FailState(stage, hud, am),
+        States.PROFIT to ProfitState(stage, hud, am),
+        States.SKIP to ProfitState(stage, hud, am)
     )
     private var currentState: States = States.NONE
 
