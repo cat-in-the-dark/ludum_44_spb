@@ -21,6 +21,8 @@ class WithManState(
 ) : IState {
     private val log = LoggerFactory.getLogger(WithManState::class.java)
 
+    private var pin = 0
+
     private val personBtn = Button(96, 54, 144, 128, onClick = {
         // Ok button
         IOC.put("state", States.WITH_MAN_QUESTION)
@@ -32,12 +34,26 @@ class WithManState(
     })
 
     override fun onActivate() {
-
+        pin = 0
     }
 
     override fun onUpdate() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             generatePerson()
+
+            if (pin == 111) {
+                IOC.put("money", IOC.atOr("money", 0) + Const.Balance.generateReward(IOC.atOr("money", 0)))
+            }
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+            pin += 100
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.O)) {
+            pin += 10
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            pin += 1
         }
 
         val personTextures = IOC.atOrFail<PersonTextures>("personTextures")
