@@ -4,13 +4,13 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.DEFAULT_CHARS
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader
-import javax.naming.Name
 
 object Assets {
     private const val RUSSIAN_CHARACTERS = DEFAULT_CHARS +
@@ -31,18 +31,22 @@ object Assets {
             val resolver = InternalFileHandleResolver()
             setLoader(FreeTypeFontGenerator::class.java, FreeTypeFontGeneratorLoader(resolver))
             setLoader(BitmapFont::class.java, ".ttf", FreetypeFontLoader(resolver))
-            val params_big = FreetypeFontLoader.FreeTypeFontLoaderParameter().apply {
+            load(Names.FONT_BIG, BitmapFont::class.java, FreetypeFontLoader.FreeTypeFontLoaderParameter().apply {
                 fontParameters.size = 32
                 fontParameters.characters = RUSSIAN_CHARACTERS
                 fontFileName = "fonts/cyrfont.ttf"
-            }
-            val params_small = FreetypeFontLoader.FreeTypeFontLoaderParameter().apply {
+            })
+            load(Names.FONT_SMALL, BitmapFont::class.java, FreetypeFontLoader.FreeTypeFontLoaderParameter().apply {
                 fontParameters.size = 24
                 fontParameters.characters = RUSSIAN_CHARACTERS
                 fontFileName = "fonts/cyrfont.ttf"
-            }
-            load(Names.FONT_BIG, BitmapFont::class.java, params_big)
-            load(Names.FONT_SMALL, BitmapFont::class.java, params_small)
+            })
+            load(Names.FONT_SMALL_BLACK, BitmapFont::class.java, FreetypeFontLoader.FreeTypeFontLoaderParameter().apply {
+                fontParameters.size = 20
+                fontParameters.characters = RUSSIAN_CHARACTERS
+                fontParameters.color = Color.BLACK
+                fontFileName = "fonts/cyrfont.ttf"
+            })
         }
     }
 
@@ -50,6 +54,7 @@ object Assets {
         val FONT = "fonts/tahoma-10.fnt"
         val FONT_BIG = "font_big.ttf"
         val FONT_SMALL = "font_small.ttf"
+        val FONT_SMALL_BLACK = "font_small_black.ttf"
         val LOGO = "textures/logo.png"
         val TITLE = "textures/title.png"
         val STOL = "textures/STOL.png"

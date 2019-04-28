@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.game.exceptions.InvalidAnswerException
 import org.catinthedark.itsadeal.game.questionary.Person
+import org.catinthedark.itsadeal.game.questionary.insertPeriodically
 import org.catinthedark.itsadeal.lib.managed
 import org.slf4j.LoggerFactory
 
@@ -26,6 +27,8 @@ class WithManState(
     override fun onActivate() {
 
     }
+
+
 
     override fun onUpdate() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
@@ -50,6 +53,8 @@ class WithManState(
 
             it.draw(am.at<Texture>(personTextures.shlapa), 0f, 0f)
         }
+
+
 
         if (askedQuestions < maxAskedQuestions) {
             val questionMap = person.getQuestions(3)
@@ -100,12 +105,27 @@ class WithManState(
             it.draw(am.at<Texture>(Assets.Names.MENU), 0f, 0f)
         }
         hud.batch.managed {
-            am.at<BitmapFont>(Assets.Names.FONT_BIG)
-                .draw(it, questions[0], 0f, Const.Projection.toHud(130f))
-            am.at<BitmapFont>(Assets.Names.FONT_SMALL)
-                .draw(it, questions[1], 0f, Const.Projection.toHud(120f))
-            am.at<BitmapFont>(Assets.Names.FONT_BIG)
-                .draw(it, questions[2], 0f, Const.Projection.toHud(110f))
+            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
+                .draw(
+                    it,
+                    "- ${questions[0].insertPeriodically("\n", 40)}",
+                    Const.Projection.toHud(60f),
+                    Const.Projection.toHud(46f)
+                )
+            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
+                .draw(
+                    it,
+                    "- ${questions[1].insertPeriodically("\n", 40)}",
+                    Const.Projection.toHud(60f),
+                    Const.Projection.toHud(34f)
+                )
+            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
+                .draw(
+                    it,
+                    "- ${questions[2].insertPeriodically("\n", 40)}",
+                    Const.Projection.toHud(60f),
+                    Const.Projection.toHud(22f)
+                )
         }
     }
 
