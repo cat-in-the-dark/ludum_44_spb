@@ -1,19 +1,15 @@
 package org.catinthedark.itsadeal.game
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
-import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.assets.AssetManager
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
+import org.catinthedark.itsadeal.game.states.DocumentReviewState
+import org.catinthedark.itsadeal.game.states.EmptyRoomState
 import org.catinthedark.itsadeal.game.states.WithManState
-import org.catinthedark.itsadeal.lib.managed
-import kotlin.math.roundToInt
+import org.slf4j.LoggerFactory
 
 enum class States {
-    EMPTY_ROOM, WITH_MAN, DOCUMENT_REVIEW
+    NONE, EMPTY_ROOM, WITH_MAN, DOCUMENT_REVIEW
 }
 
 class GameStateMachine(
@@ -21,10 +17,15 @@ class GameStateMachine(
     private val hud: Stage,
     private val am: AssetManager
 ) {
-    private lateinit var personTextures: PersonTextures
+    private val logger = LoggerFactory.getLogger(javaClass)
     private val inputs = InputAdapterHolder(stage)
 
-    private val renderWithMan = WithManState(stage, hud, am)
+    private val states = mapOf(
+        States.EMPTY_ROOM to EmptyRoomState(stage, hud, am),
+        States.WITH_MAN to WithManState(stage, hud, am),
+        States.DOCUMENT_REVIEW to DocumentReviewState(stage, hud, am)
+    )
+    private var currentState: States = States.NONE
 
     init {
         Gdx.input.inputProcessor = inputs
@@ -34,53 +35,16 @@ class GameStateMachine(
 
 
     fun render() {
-        when (IOC.at<States>("state")) {
-            States.EMPTY_ROOM -> renderEmptyRoom()
-            States.WITH_MAN -> renderWithMan.onUpdate()
-            States.DOCUMENT_REVIEW -> renderDocumentReview()
+        val state = IOC.atOr("state", States.NONE)
+        if (state != currentState) {
+            logger.info("Transition from $currentState to $state")
+            states[currentState]?.onExit()
+            states[state]?.onActivate()
+            currentState = state
         }
+
+        states[currentState]?.onUpdate() ?: logger.info("Unknown $state")
         inputs.update()
-    }
-
-    private fun renderDocumentReview() {
-        if (inputs.isMouseClicked) {
-            IOC.put("state", States.EMPTY_ROOM)
-        }
-
-
-        stage.batch.managed {
-            it.draw(am.at<Texture>(personTextures.body), 0f, 0f)
-            it.draw(am.at<Texture>(Assets.Names.STOL), 0f, 0f)
-            it.draw(am.at<Texture>(Assets.Names.RUKI), 0f, 0f)
-            it.draw(am.at<Texture>(personTextures.golova), 0f, 0f)
-
-            it.draw(am.at<Texture>(personTextures.faces), 0f, 0f) // TODO: make kivok
-
-            it.draw(am.at<Texture>(personTextures.shlapa), 0f, 0f)
-
-            it.draw(am.at<Texture>(Assets.Names.DOCUMENT), 0f, 0f)
-        }
-    }
-
-    private fun renderEmptyRoom() {
-        if (inputs.isMouseClicked) {
-            IOC.put("state", States.WITH_MAN)
-            personTextures = RandomPersonTextures()
-        }
-
-        stage.batch.managed {
-            it.draw(am.at<Texture>(Assets.Names.STOL), 0f, 0f)
-            it.draw(am.at<Texture>(Assets.Names.RUKI), 0f, 0f)
-        }
-    }
-
-    private fun drawQuestions() {
-        hud.batch.managed {
-            am.at<BitmapFont>(Assets.Names.FONT_BIG).draw(it, "Все как договаривались?", 0f, Const.Projection.toHud(130f))
-            am.at<BitmapFont>(Assets.Names.FONT_SMALL).draw(it, "Похоже у вас сегодня удачный день. Я обычно очень занят", 0f, Const.Projection.toHud(120f))
-            am.at<BitmapFont>(Assets.Names.FONT_BIG).draw(it, "Вы торопитесь?", 0f, Const.Projection.toHud(110f))
-            am.at<BitmapFont>(Assets.Names.FONT_BIG).draw(it, "Передать привет жене?", 0f, Const.Projection.toHud(90f))
-        }
     }
 
     fun onExit() {

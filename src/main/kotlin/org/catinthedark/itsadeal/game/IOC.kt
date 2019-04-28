@@ -15,7 +15,26 @@ object IOC {
 inline fun <reified T> IOC.at(name: String): T? {
     val obj = get(name)
     if (obj is T?) {
-        return obj as T
+        return obj
+    } else {
+        throw ClassCastException("Object for $name is not a ${T::class.java.name}")
+    }
+}
+
+inline fun <reified T> IOC.atOrFail(name: String): T {
+    val obj = get(name) ?: throw NullPointerException("$name is null")
+    if (obj is T) {
+        return obj
+    } else {
+        throw ClassCastException("Object for $name is not a ${T::class.java.name}")
+    }
+}
+
+
+inline fun <reified T> IOC.atOr(name: String, default: T): T {
+    val obj = get(name)
+    if (obj is T?) {
+        return obj ?: default
     } else {
         throw ClassCastException("Object for $name is not a ${T::class.java.name}")
     }
