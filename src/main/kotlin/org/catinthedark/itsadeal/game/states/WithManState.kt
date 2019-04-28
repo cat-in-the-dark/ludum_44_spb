@@ -44,9 +44,9 @@ class WithManState(
     }
 
     private fun doBlink() {
-        localDeffer?.register(listOf(1f, 1.2f, 1.8f, 2f, 3f).random()) {
+        localDeffer?.register(listOf(0.3f, 1f, 1f, 1.2f, 1.8f, 2f, 3f).random()) {
             blink = true
-            localDeffer?.register(0.3f) {
+            localDeffer?.register(0.15f) {
                 blink = false
                 doBlink()
             }
