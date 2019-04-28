@@ -3,33 +3,12 @@ package org.catinthedark.itsadeal.game.states
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.Stage
-import org.catinthedark.itsadeal.game.*
+import org.catinthedark.itsadeal.game.Assets
+import org.catinthedark.itsadeal.game.IOC
+import org.catinthedark.itsadeal.game.at
+import org.catinthedark.itsadeal.game.ui.Button
 import org.catinthedark.itsadeal.lib.managed
 import org.slf4j.LoggerFactory
-
-class Button(
-    val xMin: Int,
-    val yMin: Int,
-    val xMax: Int,
-    val yMax: Int,
-    private val onClick: () -> Unit = {},
-    private val onHover: () -> Unit = {}
-) {
-    fun isHover(x: Int, y: Int): Boolean {
-        println("x=$x, y=$y, [$xMin,$yMin ... $xMax,$yMax]")
-        return x >= xMin && x <= xMax && y >= yMin && y <= yMax
-    }
-
-    fun update() {
-        val inputs: InputAdapterHolder = IOC.at("inputs") ?: return
-        if (isHover(inputs.mouseX, inputs.mouseY)) {
-            onHover()
-            if (inputs.isMouseClicked) {
-                onClick()
-            }
-        }
-    }
-}
 
 class DocumentReviewState(
     private val stage: Stage,
