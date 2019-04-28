@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
+import org.catinthedark.itsadeal.game.states.WithManState
 import org.catinthedark.itsadeal.lib.managed
 import kotlin.math.roundToInt
 
@@ -21,18 +22,21 @@ class GameStateMachine(
     private val am: AssetManager
 ) {
     private lateinit var personTextures: PersonTextures
-    private var state: States = States.EMPTY_ROOM
     private val inputs = InputAdapterHolder(stage)
+
+    private val renderWithMan = WithManState(stage, hud, am)
 
     init {
         Gdx.input.inputProcessor = inputs
+        IOC.put("inputs", inputs)
+        IOC.put("state", States.EMPTY_ROOM)
     }
 
 
     fun render() {
-        when (state) {
+        when (IOC.at<States>("state")) {
             States.EMPTY_ROOM -> renderEmptyRoom()
-            States.WITH_MAN -> renderWithMan()
+            States.WITH_MAN -> renderWithMan.onUpdate()
             States.DOCUMENT_REVIEW -> renderDocumentReview()
         }
         inputs.update()
@@ -40,7 +44,7 @@ class GameStateMachine(
 
     private fun renderDocumentReview() {
         if (inputs.isMouseClicked) {
-            state = States.EMPTY_ROOM
+            IOC.put("state", States.EMPTY_ROOM)
         }
 
 
@@ -60,7 +64,7 @@ class GameStateMachine(
 
     private fun renderEmptyRoom() {
         if (inputs.isMouseClicked) {
-            state = States.WITH_MAN
+            IOC.put("state", States.WITH_MAN)
             personTextures = RandomPersonTextures()
         }
 
@@ -79,53 +83,7 @@ class GameStateMachine(
         }
     }
 
-    private fun renderWithMan() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            personTextures = RandomPersonTextures()
-        }
-        if (inputs.isMouseClicked) {
-            state = States.DOCUMENT_REVIEW
-        }
-
-        stage.batch.managed {
-            it.draw(am.at<Texture>(personTextures.body), 0f, 0f)
-            it.draw(am.at<Texture>(Assets.Names.STOL), 0f, 0f)
-            it.draw(am.at<Texture>(Assets.Names.RUKI), 0f, 0f)
-            it.draw(am.at<Texture>(personTextures.golova), 0f, 0f)
-
-            it.draw(am.at<Texture>(personTextures.faces), 0f, 0f) // TODO: make kivok
-
-            it.draw(am.at<Texture>(personTextures.shlapa), 0f, 0f)
-        }
-        drawQuestions()
-    }
-
     fun onExit() {
         Gdx.input.inputProcessor = null
-    }
-}
-
-class InputAdapterHolder(
-    private val stage: Stage
-) : InputAdapter() {
-    var isMouseClicked = false
-    var mouseX: Int = -1
-    var mouseY: Int = -1
-
-    fun update() {
-        isMouseClicked = false
-    }
-
-    override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        if (pointer == Input.Buttons.LEFT) {
-            val vec = Vector3(screenX.toFloat(), screenY.toFloat(), 0f)
-            stage.viewport.unproject(vec)
-            isMouseClicked = true
-            mouseX = vec.x.roundToInt()
-            mouseY = vec.y.roundToInt()
-            println("x=$mouseX, y=$mouseY")
-        }
-
-        return true
     }
 }
