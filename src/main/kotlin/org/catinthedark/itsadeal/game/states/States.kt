@@ -7,5 +7,6 @@ enum class States {
     DOCUMENT_REVIEW,
     SKIP,
     PROFIT,
-    FAIL
+    FAIL,
+    BANKROT
 }

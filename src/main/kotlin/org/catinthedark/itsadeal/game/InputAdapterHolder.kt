@@ -1,5 +1,6 @@
 package org.catinthedark.itsadeal.game
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.math.Vector3
@@ -15,18 +16,27 @@ class InputAdapterHolder(
 
     fun update() {
         isMouseClicked = false
+        updateMousePos()
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         if (pointer == Input.Buttons.LEFT) {
-            val vec = Vector3(screenX.toFloat(), screenY.toFloat(), 0f)
-            stage.viewport.unproject(vec)
             isMouseClicked = true
-            mouseX = vec.x.roundToInt()
-            mouseY = vec.y.roundToInt()
+            updateMousePos()
             println("x=$mouseX, y=$mouseY")
         }
 
         return true
+    }
+
+    private fun updateMousePos(pointer: Int = 0) {
+        val vec = Vector3(
+            Gdx.input.getX(pointer).toFloat(),
+            Gdx.input.getY(pointer).toFloat(),
+            0f
+        )
+        stage.viewport.unproject(vec)
+        mouseX = vec.x.roundToInt()
+        mouseY = vec.y.roundToInt()
     }
 }

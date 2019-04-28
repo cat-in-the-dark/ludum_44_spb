@@ -20,7 +20,8 @@ class GameStateMachine(
         States.DOCUMENT_REVIEW to DocumentReviewState(stage, hud, am),
         States.FAIL to FailState(stage, hud, am),
         States.PROFIT to ProfitState(stage, hud, am),
-        States.SKIP to ProfitState(stage, hud, am)
+        States.SKIP to SkipState(stage, hud, am),
+        States.BANKROT to BankrotState(stage, hud, am)
     )
     private var currentState: States = States.NONE
 

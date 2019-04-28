@@ -3,9 +3,11 @@ package org.catinthedark.itsadeal.game.screens
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.GameStateMachine
+import org.catinthedark.itsadeal.game.IOC
+import org.catinthedark.itsadeal.game.atOr
 import org.catinthedark.itsadeal.lib.YieldUnit
 
-class GameScreen(private val stage: Stage, private val hud: Stage): YieldUnit<AssetManager, AssetManager> {
+class GameScreen(private val stage: Stage, private val hud: Stage) : YieldUnit<AssetManager, AssetManager> {
     private lateinit var am: AssetManager
     private lateinit var gameState: GameStateMachine
 
@@ -16,6 +18,9 @@ class GameScreen(private val stage: Stage, private val hud: Stage): YieldUnit<As
 
     override fun run(delta: Float): AssetManager? {
         gameState.render()
+        if (IOC.atOr("isGameOver", false)) {
+            return am
+        }
         return null
     }
 
