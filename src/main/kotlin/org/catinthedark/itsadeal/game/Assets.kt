@@ -56,6 +56,8 @@ object Assets {
         val BODY01 = "textures/BODY01.png"
         val RUKI = "textures/RUKI.png"
         val DOCUMENT = "textures/document.png"
+        val ROOM = "textures/KOMANTA.png"
+        val MENU = "textures/MENU.png"
 
         val textures = listOf(
             LOGO,
@@ -63,7 +65,9 @@ object Assets {
             STOL,
             BODY01,
             RUKI,
-            DOCUMENT
+            DOCUMENT,
+            ROOM,
+            MENU
         )
 
         object Sounds {

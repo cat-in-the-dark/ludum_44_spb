@@ -21,7 +21,7 @@ class WithManState(
 
     private val noQuestions = "Вопросов больше нет."
 
-    val maxAskedQuestions = 3
+    private val maxAskedQuestions = 3
 
     override fun onActivate() {
 
@@ -40,6 +40,7 @@ class WithManState(
         var askedQuestions = IOC.atOr("askedQuestions", 0)
 
         stage.batch.managed {
+            it.draw(am.at<Texture>(Assets.Names.ROOM), 0f, 0f)
             it.draw(am.at<Texture>(personTextures.body), 0f, 0f)
             it.draw(am.at<Texture>(Assets.Names.STOL), 0f, 0f)
             it.draw(am.at<Texture>(Assets.Names.RUKI), 0f, 0f)
@@ -95,6 +96,9 @@ class WithManState(
     }
 
     private fun drawQuestions(questions: List<String>) {
+        stage.batch.managed {
+            it.draw(am.at<Texture>(Assets.Names.MENU), 0f, 0f)
+        }
         hud.batch.managed {
             am.at<BitmapFont>(Assets.Names.FONT_BIG)
                 .draw(it, questions[0], 0f, Const.Projection.toHud(130f))

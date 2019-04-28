@@ -30,6 +30,7 @@ class EmptyRoomState(
         }
 
         stage.batch.managed {
+            it.draw(am.at<Texture>(Assets.Names.ROOM), 0f, 0f)
             it.draw(am.at<Texture>(Assets.Names.STOL), 0f, 0f)
             it.draw(am.at<Texture>(Assets.Names.RUKI), 0f, 0f)
         }
