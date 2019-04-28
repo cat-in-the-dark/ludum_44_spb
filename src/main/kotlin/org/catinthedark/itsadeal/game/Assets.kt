@@ -2,6 +2,7 @@ package org.catinthedark.itsadeal.game
 
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver
+import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
@@ -17,20 +18,12 @@ object Assets {
 
     fun load(): AssetManager {
         return AssetManager().apply {
-            val textures = listOf(
-                Names.LOGO,
-                Names.TITLE,
-                Names.STOL,
-                Names.BODY01,
-                Names.RUKI,
-                Names.DOCUMENT
-            )
-
             load(Names.FONT, BitmapFont::class.java)
-            textures.forEach { load(it, Texture::class.java) }
+            Names.textures.forEach { load(it, Texture::class.java) }
             Names.FACES.forEach { load(it, Texture::class.java) }
             Names.SHLAPY.forEach { load(it, Texture::class.java) }
             Names.GOLOVA.forEach { load(it, Texture::class.java) }
+            Names.Sounds.all.forEach { load(it, Sound::class.java) }
 
             val resolver = InternalFileHandleResolver()
             setLoader(FreeTypeFontGenerator::class.java, FreeTypeFontGeneratorLoader(resolver))
@@ -60,6 +53,24 @@ object Assets {
         val BODY01 = "textures/BODY01.png"
         val RUKI = "textures/RUKI.png"
         val DOCUMENT = "textures/document.png"
+
+        val textures = listOf(
+            LOGO,
+            TITLE,
+            STOL,
+            BODY01,
+            RUKI,
+            DOCUMENT
+        )
+
+        object Sounds {
+            val NEXT = "sounds/Next_ru.mp3"
+            val HOVER = "sounds/Chose.mp3"
+            val REJECT_DOC = "sounds/Doc_reject.mp3"
+            val ACCEPT_DOC = "sounds/Doc_sign.mp3"
+
+            val all = listOf(NEXT, HOVER, REJECT_DOC, ACCEPT_DOC)
+        }
 
         //
         val FACES = listOf(
