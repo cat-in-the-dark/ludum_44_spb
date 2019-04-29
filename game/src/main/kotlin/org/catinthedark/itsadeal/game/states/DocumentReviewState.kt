@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.Assets
 import org.catinthedark.itsadeal.game.Const
 import org.catinthedark.itsadeal.game.at
-import org.catinthedark.itsadeal.game.exceptions.InvalidDocumentException
+import org.catinthedark.itsadeal.game.questionary.DocContent
 import org.catinthedark.itsadeal.game.questionary.Person
 import org.catinthedark.itsadeal.game.questionary.insertPeriodically
 import org.catinthedark.itsadeal.game.ui.Button
@@ -76,15 +76,12 @@ class DocumentReviewState : IState {
     }
 
     private fun drawDocContents() {
-        val docContents = IOC.atOrFail<List<String>>("docContents")
-        if (docContents.size < 3) {
-            throw InvalidDocumentException()
-        }
+        val docContents = IOC.atOrFail<DocContent>("docContents")
 
         hud.batch.managed {
-            val header = docContents[0].toUpperCase().insertPeriodically("\n", 10)
-            val subheader = docContents[1].insertPeriodically("\n", 16)
-            val text = docContents[2].insertPeriodically("\n", 20)
+            val header = docContents.header.toUpperCase().insertPeriodically("\n", 10)
+            val subheader = docContents.action.insertPeriodically("\n", 16)
+            val text = docContents.subject.insertPeriodically("\n", 20)
             val layout = GlyphLayout(am.at<BitmapFont>(Assets.Names.FONT_BIG_SERIF), header)
             am.at<BitmapFont>(Assets.Names.FONT_BIG_SERIF)
                 .draw(

@@ -40,12 +40,13 @@ class WithManQuestionState: IState {
     }
 
     private fun answer(questionIndex: Int) {
+        val askedQuestions = IOC.atOr("askedQuestions", 0)
+        if (askedQuestions >= maxAskedQuestions) return
+
         val person = IOC.atOrFail<Person>("person")
         val questionMap = person.getQuestions(3)
         val questionList = questionMap.map { it.key }
-        val askedQuestions = IOC.atOr("askedQuestions", 0)
 
-        if (askedQuestions >= maxAskedQuestions) return
         if (questionIndex >= questionList.size) return
 
         val answer = questionMap[questionList[questionIndex]]

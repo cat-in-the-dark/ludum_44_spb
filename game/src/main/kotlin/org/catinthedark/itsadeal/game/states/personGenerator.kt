@@ -13,7 +13,8 @@ fun generatePerson() {
     IOC.put("person", PersonFactory().getRandomPerson())
     IOC.put("askedQuestions", 0)
     IOC.put("current_answer", "")
-    IOC.put("docContents", DocsGenerator().getDocument())
+    IOC.put("wrongIssuer", "")
+    IOC.put("docContents", DocsGenerator.getDocument())
     IOC.put("docTexture", Assets.Names.DOCUMENTS.random())
     IOC.put("reward", generateReward(IOC.atOr("money", 0)))
 }

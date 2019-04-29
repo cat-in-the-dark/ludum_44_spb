@@ -1,5 +1,9 @@
 package org.catinthedark.itsadeal.game.questionary
 
+import org.catinthedark.itsadeal.lib.IOC
+import org.catinthedark.itsadeal.lib.at
+import org.catinthedark.itsadeal.lib.atOrFail
+
 fun String.insertPeriodically(
     insert: String, period: Int
 ): String {
@@ -22,4 +26,18 @@ fun String.insertPeriodically(
         index += period
     }
     return builder.toString()
+}
+
+fun String.replaceIssuer(): String {
+    val subject = IOC.atOrFail<DocContent>("docContents").subject
+    val correctIssuer = DocsGenerator.subjectToIssuer[subject] ?: error("There is not $subject")
+
+    if (IOC.at<String>("wrongIssuer").isNullOrBlank()) {
+        val res = DocsGenerator.subjectToIssuer.filterValues { it != correctIssuer }.values.random()
+        IOC.put("wrongIssuer", res)
+    }
+
+    val wrongIssuer = IOC.atOrFail<String>("wrongIssuer")
+
+    return replace("<correct_issuer>", correctIssuer).replace("<wrong_issuer>", wrongIssuer)
 }

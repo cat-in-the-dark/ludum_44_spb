@@ -1,6 +1,6 @@
 package org.catinthedark.itsadeal.game.questionary
 
-public class DocsGenerator {
+object DocsGenerator {
     private val headers = listOf(
         "Закон",
         "Проект",
@@ -9,7 +9,7 @@ public class DocsGenerator {
         "Указ"
     )
 
-    private val subHeaders = listOf(
+    private val actions = listOf(
         "об оптимизации",
         "о финансировании",
         "о ликвидации",
@@ -17,23 +17,28 @@ public class DocsGenerator {
         "о передаче      инвесторам"
     )
 
-    private val contents = listOf(
-        "Медицинских учреждений",
-        "Объектов охраны НЛО",
-        "Городского имущества",
-        "Ядерных отходов",
-        "Объектов культурного наследия",
-        "Парникового эффекта",
-        "Векторного гипетртекстового фидонета",
-        "Систем оповещения",
-        "Средств контрацепции"
+    val subjectToIssuer = mapOf(
+        "Медицинских учреждений" to "Министерство здравоохранения",
+        "Объектов охраны НЛО" to "Министерство летающих тарелок",
+        "Городского имущества" to "Министерство гражданского строительства",
+        "Ядерных отходов" to "Министерство атомной промышленности",
+        "Объектов культурного наследия" to "Министерство культуры",
+        "Парникового эффекта" to "Министерство охраны природы",
+        "Векторного гипетртекстового фидонета" to "Министерство гипертекстового фидонета",
+        "Систем оповещения" to "Министерство гражданской обороны",
+        "Средств контрацепции" to "Министерство планирования семьи"
     )
 
-    fun getDocument(): List<String> {
-        return listOf(
+    private val subjects: Collection<String>
+        get() = subjectToIssuer.keys
+
+    fun getDocument(): DocContent {
+        return DocContent(
             headers.random(),
-            subHeaders.random(),
-            contents.random()
+            actions.random(),
+            subjects.random()
         )
     }
 }
+
+data class DocContent(val header: String, val action: String, val subject: String)

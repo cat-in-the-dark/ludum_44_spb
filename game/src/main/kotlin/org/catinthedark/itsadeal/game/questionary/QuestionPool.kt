@@ -77,6 +77,13 @@ class QuestionPool {
                 TemplateString("%s", "Что?", "Конечно нет!", "Хорошая шутка"),
                 TemplateString("Я нет. И я нет.", "Вы так говорите, как будто это что-то плохое")
             )
+        ),
+        Pair(
+            TemplateString("%s", "Из какого вы, говорите, министерства?", "Из какого вы министерства?"),
+            Pair(
+                TemplateString("<correct_issuer>"),
+                TemplateString("<wrong_issuer>")
+            )
         )
     )
 
