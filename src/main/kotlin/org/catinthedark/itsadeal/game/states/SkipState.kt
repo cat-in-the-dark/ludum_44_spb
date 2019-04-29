@@ -7,8 +7,7 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
-import org.catinthedark.itsadeal.lib.Deffer
-import org.catinthedark.itsadeal.lib.managed
+import org.catinthedark.itsadeal.lib.*
 import org.slf4j.LoggerFactory
 
 class SkipState(

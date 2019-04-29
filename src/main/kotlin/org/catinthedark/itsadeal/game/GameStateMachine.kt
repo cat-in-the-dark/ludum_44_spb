@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.states.*
+import org.catinthedark.itsadeal.lib.IOC
+import org.catinthedark.itsadeal.lib.atOr
 import org.slf4j.LoggerFactory
 
 class GameStateMachine(

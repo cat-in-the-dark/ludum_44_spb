@@ -1,4 +1,4 @@
-package org.catinthedark.itsadeal.game
+package org.catinthedark.itsadeal.lib
 
 import java.util.concurrent.ConcurrentHashMap
 

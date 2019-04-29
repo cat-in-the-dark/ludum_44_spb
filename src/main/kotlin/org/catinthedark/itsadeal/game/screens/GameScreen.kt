@@ -6,7 +6,9 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
+import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.lib.YieldUnit
+import org.catinthedark.itsadeal.lib.atOr
 
 class GameScreen(private val stage: Stage, private val hud: Stage) : YieldUnit<AssetManager, AssetManager> {
     private lateinit var am: AssetManager

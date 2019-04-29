@@ -6,15 +6,14 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.utils.viewport.ExtendViewport
-import com.badlogic.gdx.utils.viewport.FillViewport
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.badlogic.gdx.utils.viewport.ScreenViewport
 import org.catinthedark.itsadeal.game.screens.GameScreen
 import org.catinthedark.itsadeal.game.screens.SplashScreen
 import org.catinthedark.itsadeal.game.screens.TitleScreen
 import org.catinthedark.itsadeal.lib.Deffer
+import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.lib.RouteMachine
+import org.catinthedark.itsadeal.lib.at
 
 class ItsaDealGame : Game() {
     private val rm = RouteMachine()

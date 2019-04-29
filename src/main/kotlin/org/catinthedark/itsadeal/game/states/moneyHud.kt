@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
+import org.catinthedark.itsadeal.lib.IOC
+import org.catinthedark.itsadeal.lib.atOr
 import org.catinthedark.itsadeal.lib.managed
 
 fun moneyHud(

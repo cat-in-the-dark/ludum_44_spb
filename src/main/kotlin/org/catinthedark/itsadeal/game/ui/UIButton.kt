@@ -1,8 +1,8 @@
 package org.catinthedark.itsadeal.game.ui
 
-import org.catinthedark.itsadeal.game.IOC
+import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.game.InputAdapterHolder
-import org.catinthedark.itsadeal.game.at
+import org.catinthedark.itsadeal.lib.at
 
 class Button(
     val xMin: Int,

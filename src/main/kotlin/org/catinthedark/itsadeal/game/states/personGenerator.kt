@@ -2,9 +2,9 @@ package org.catinthedark.itsadeal.game.states
 
 import org.catinthedark.itsadeal.game.Assets
 import org.catinthedark.itsadeal.game.Const.Balance.generateReward
-import org.catinthedark.itsadeal.game.IOC
+import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.game.RandomPersonTextures
-import org.catinthedark.itsadeal.game.atOr
+import org.catinthedark.itsadeal.lib.atOr
 import org.catinthedark.itsadeal.game.questionary.DocsGenerator
 import org.catinthedark.itsadeal.game.questionary.PersonFactory
 

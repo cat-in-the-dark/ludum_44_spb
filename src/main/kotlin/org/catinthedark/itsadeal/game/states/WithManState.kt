@@ -4,15 +4,10 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
-import org.catinthedark.itsadeal.game.exceptions.InvalidAnswerException
-import org.catinthedark.itsadeal.game.questionary.Person
-import org.catinthedark.itsadeal.game.questionary.insertPeriodically
 import org.catinthedark.itsadeal.game.ui.Button
-import org.catinthedark.itsadeal.lib.Deffer
-import org.catinthedark.itsadeal.lib.managed
+import org.catinthedark.itsadeal.lib.*
 import org.slf4j.LoggerFactory
 
 class WithManState(
@@ -57,7 +52,8 @@ class WithManState(
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             if (pin == 111) {
                 generatePerson()
-                IOC.put("money", IOC.atOr("money", 0) + Const.Balance.generateReward(IOC.atOr("money", 0)))
+                IOC.put("money", IOC.atOr("money", 0) + Const.Balance.generateReward(
+                    IOC.atOr("money", 0)))
             }
         }
 
