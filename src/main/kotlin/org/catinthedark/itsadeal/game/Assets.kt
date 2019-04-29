@@ -21,7 +21,6 @@ object Assets {
 
     fun load(): AssetManager {
         return AssetManager().apply {
-            load(Names.FONT, BitmapFont::class.java)
             Names.textures.forEach { load(it, Texture::class.java) }
             Names.FACES.forEach { load(it, Texture::class.java) }
             Names.SHLAPY.forEach { load(it, Texture::class.java) }
@@ -77,7 +76,6 @@ object Assets {
     }
 
     object Names {
-        val FONT = "fonts/tahoma-10.fnt"
         val FONT_BIG = "font_big.ttf"
         val FONT_SMALL = "font_small.ttf"
         val FONT_SMALL_BLACK = "font_small_black.ttf"
