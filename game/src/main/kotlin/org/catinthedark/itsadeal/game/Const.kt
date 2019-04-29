@@ -41,5 +41,12 @@ object Const {
             if (money < 10000000) return 10000000 to "Самолет"
             return Int.MAX_VALUE to "GG"
         }
+
+        fun incriminatingFactor(money: Int): Float {
+            if (money < 500) return 1f
+            if (money < 1500) return 0.7f
+            if (money < 7500) return 0.7f
+            return 0.4f
+        }
     }
 }

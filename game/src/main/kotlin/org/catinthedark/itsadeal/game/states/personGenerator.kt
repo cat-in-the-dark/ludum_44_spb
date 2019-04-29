@@ -7,10 +7,11 @@ import org.catinthedark.itsadeal.game.RandomPersonTextures
 import org.catinthedark.itsadeal.lib.atOr
 import org.catinthedark.itsadeal.game.questionary.DocsGenerator
 import org.catinthedark.itsadeal.game.questionary.PersonFactory
+import org.catinthedark.itsadeal.lib.atOrFail
 
 fun generatePerson() {
     IOC.put("personTextures", RandomPersonTextures())
-    IOC.put("person", PersonFactory().getRandomPerson())
+    IOC.put("person", IOC.atOrFail<PersonFactory>("personFactory").getRandomPerson())
     IOC.put("askedQuestions", 0)
     IOC.put("current_answer", "")
     IOC.put("wrongIssuer", "")
