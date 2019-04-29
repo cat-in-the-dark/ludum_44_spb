@@ -8,14 +8,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.lib.*
+import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
 
 class SkipState(
     private val stage: Stage,
-    private val hud: Stage,
-    private val am: AssetManager
+    private val hud: Stage
 ) : IState {
     private val logger = LoggerFactory.getLogger(javaClass)
+    private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
 
     override fun onActivate() {
         IOC.put("money", IOC.atOr("money", 0) - Const.Balance.SKIP_COST)

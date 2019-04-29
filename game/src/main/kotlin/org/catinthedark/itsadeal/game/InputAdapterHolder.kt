@@ -5,11 +5,13 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
+import org.slf4j.LoggerFactory
 import kotlin.math.roundToInt
 
 class InputAdapterHolder(
     private val stage: Stage
 ) : InputAdapter() {
+    private val logger = LoggerFactory.getLogger(javaClass)
     var isMouseClicked = false
     var mouseX: Int = -1
     var mouseY: Int = -1
@@ -23,7 +25,7 @@ class InputAdapterHolder(
         if (pointer == Input.Buttons.LEFT) {
             isMouseClicked = true
             updateMousePos()
-            println("x=$mouseX, y=$mouseY")
+            logger.info("x=$mouseX, y=$mouseY")
         }
 
         return true

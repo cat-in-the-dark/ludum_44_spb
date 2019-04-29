@@ -1,4 +1,4 @@
-package org.catinthedark.itsadeal.game.states
+package org.catinthedark.itsadeal.lib.states
 
 interface IState {
     fun onActivate()

@@ -8,18 +8,16 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
-import org.catinthedark.itsadeal.lib.Deffer
-import org.catinthedark.itsadeal.lib.IOC
-import org.catinthedark.itsadeal.lib.atOrFail
-import org.catinthedark.itsadeal.lib.managed
+import org.catinthedark.itsadeal.lib.*
+import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
 
 class FailState(
     private val stage: Stage,
-    private val hud: Stage,
-    private val am: AssetManager
+    private val hud: Stage
 ): IState {
     private val logger = LoggerFactory.getLogger(javaClass)
+    private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
     private var canSkip = false
 
     override fun onActivate() {
@@ -36,8 +34,7 @@ class FailState(
         }
 
         if (canSkip && (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || IOC.atOrFail<InputAdapterHolder>("inputs").isMouseClicked)) {
-            IOC.put("state", States.EMPTY_ROOM)
-            IOC.put("isGameOver", true)
+            IOC.put("state", States.TITLE_SCREEN)
         }
     }
 

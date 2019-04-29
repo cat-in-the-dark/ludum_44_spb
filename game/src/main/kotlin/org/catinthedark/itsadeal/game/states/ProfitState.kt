@@ -7,18 +7,16 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
-import org.catinthedark.itsadeal.lib.IOC
-import org.catinthedark.itsadeal.lib.atOr
-import org.catinthedark.itsadeal.lib.atOrFail
-import org.catinthedark.itsadeal.lib.managed
+import org.catinthedark.itsadeal.lib.*
+import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
 
 class ProfitState(
     private val stage: Stage,
-    private val hud: Stage,
-    private val am: AssetManager
+    private val hud: Stage
 ) : IState {
     private val logger = LoggerFactory.getLogger(javaClass)
+    private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
 
     override fun onActivate() {
         val reward = IOC.atOr("reward", 0)

@@ -8,14 +8,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.game.ui.Button
 import org.catinthedark.itsadeal.lib.*
+import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
 
 class WithManState(
     private val stage: Stage,
-    private val hud: Stage,
-    private val am: AssetManager
+    private val hud: Stage
 ) : IState {
     private val log = LoggerFactory.getLogger(WithManState::class.java)
+    private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
 
     private var pin = 0
 

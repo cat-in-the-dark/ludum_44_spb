@@ -9,17 +9,15 @@ import org.catinthedark.itsadeal.game.exceptions.InvalidAnswerException
 import org.catinthedark.itsadeal.game.questionary.Person
 import org.catinthedark.itsadeal.game.questionary.insertPeriodically
 import org.catinthedark.itsadeal.game.ui.Button
-import org.catinthedark.itsadeal.lib.IOC
-import org.catinthedark.itsadeal.lib.atOr
-import org.catinthedark.itsadeal.lib.atOrFail
-import org.catinthedark.itsadeal.lib.managed
+import org.catinthedark.itsadeal.lib.*
+import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
 
 class WithManQuestionState(
     private val stage: Stage,
-    private val hud: Stage,
-    private val am: AssetManager
+    private val hud: Stage
 ) : IState {
+    private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
     private val log = LoggerFactory.getLogger(WithManState::class.java)
     private val buttons = listOf(
         Button(60, 32, 190, 44, onClick = {
