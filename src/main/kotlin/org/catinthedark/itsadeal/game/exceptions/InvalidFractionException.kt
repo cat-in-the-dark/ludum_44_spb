@@ -1,4 +1,8 @@
 package org.catinthedark.itsadeal.game.exceptions
 
-class InvalidFractionException(message: String) : Throwable() {
+class InvalidFractionException : Throwable {
+    constructor() : super()
+    constructor(message: String?) : super(message)
+    constructor(message: String?, cause: Throwable?) : super(message, cause)
+    constructor(cause: Throwable?) : super(cause)
 }
