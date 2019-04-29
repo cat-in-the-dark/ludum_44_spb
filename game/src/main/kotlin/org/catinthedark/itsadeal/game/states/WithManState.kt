@@ -5,17 +5,19 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.Stage
-import org.catinthedark.itsadeal.game.*
+import org.catinthedark.itsadeal.game.Assets
+import org.catinthedark.itsadeal.game.Const
+import org.catinthedark.itsadeal.game.PersonTextures
+import org.catinthedark.itsadeal.game.at
 import org.catinthedark.itsadeal.game.ui.Button
 import org.catinthedark.itsadeal.lib.*
 import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
 
-class WithManState(
-    private val stage: Stage,
-    private val hud: Stage
-) : IState {
-    private val log = LoggerFactory.getLogger(WithManState::class.java)
+class WithManState : IState {
+    private val logger = LoggerFactory.getLogger(WithManState::class.java)
+    private val stage: Stage by lazy { IOC.atOrFail<Stage>("stage") }
+    private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
     private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
 
     private var pin = 0
@@ -53,8 +55,11 @@ class WithManState(
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             if (pin == 111) {
                 generatePerson()
-                IOC.put("money", IOC.atOr("money", 0) + Const.Balance.generateReward(
-                    IOC.atOr("money", 0)))
+                IOC.put(
+                    "money", IOC.atOr("money", 0) + Const.Balance.generateReward(
+                        IOC.atOr("money", 0)
+                    )
+                )
             }
         }
 

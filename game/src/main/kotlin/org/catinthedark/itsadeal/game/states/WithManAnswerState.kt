@@ -4,16 +4,21 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
-import org.catinthedark.itsadeal.game.*
+import org.catinthedark.itsadeal.game.Assets
+import org.catinthedark.itsadeal.game.Const
+import org.catinthedark.itsadeal.game.PersonTextures
+import org.catinthedark.itsadeal.game.at
 import org.catinthedark.itsadeal.game.ui.Button
-import org.catinthedark.itsadeal.lib.*
+import org.catinthedark.itsadeal.lib.IOC
+import org.catinthedark.itsadeal.lib.atOr
+import org.catinthedark.itsadeal.lib.atOrFail
+import org.catinthedark.itsadeal.lib.managed
 import org.catinthedark.itsadeal.lib.states.IState
 
-class WithManAnswerState(
-    private val stage: Stage,
-    private val hud: Stage
-) : IState {
+class WithManAnswerState : IState {
     private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
+    private val stage: Stage by lazy { IOC.atOrFail<Stage>("stage") }
+    private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
     private val okBtn = Button(101, 16, 138, 29, onClick = {
         // Ok button
         IOC.put("state", States.WITH_MAN_QUESTION)

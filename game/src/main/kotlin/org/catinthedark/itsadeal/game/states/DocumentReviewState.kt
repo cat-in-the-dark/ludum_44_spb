@@ -6,20 +6,24 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.scenes.scene2d.Stage
-import org.catinthedark.itsadeal.game.*
+import org.catinthedark.itsadeal.game.Assets
+import org.catinthedark.itsadeal.game.Const
+import org.catinthedark.itsadeal.game.at
 import org.catinthedark.itsadeal.game.exceptions.InvalidDocumentException
 import org.catinthedark.itsadeal.game.questionary.Person
 import org.catinthedark.itsadeal.game.questionary.insertPeriodically
 import org.catinthedark.itsadeal.game.ui.Button
-import org.catinthedark.itsadeal.lib.*
+import org.catinthedark.itsadeal.lib.Deffer
+import org.catinthedark.itsadeal.lib.IOC
+import org.catinthedark.itsadeal.lib.atOrFail
+import org.catinthedark.itsadeal.lib.managed
 import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
 
-class DocumentReviewState(
-    private val stage: Stage,
-    private val hud: Stage
-) : IState {
+class DocumentReviewState : IState {
     private val logger = LoggerFactory.getLogger(javaClass)
+    private val stage: Stage by lazy { IOC.atOrFail<Stage>("stage") }
+    private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
     private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
 
     private val backButton = Button(10, 110, 55, 136, {

@@ -12,11 +12,9 @@ import org.catinthedark.itsadeal.lib.*
 import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
 
-class FailState(
-    private val stage: Stage,
-    private val hud: Stage
-): IState {
+class FailState: IState {
     private val logger = LoggerFactory.getLogger(javaClass)
+    private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
     private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
     private var canSkip = false
 

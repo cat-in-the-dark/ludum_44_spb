@@ -6,18 +6,19 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
-import org.catinthedark.itsadeal.game.*
+import org.catinthedark.itsadeal.game.Assets
+import org.catinthedark.itsadeal.game.Const
+import org.catinthedark.itsadeal.game.InputAdapterHolder
+import org.catinthedark.itsadeal.game.at
 import org.catinthedark.itsadeal.lib.IOC
-import org.catinthedark.itsadeal.lib.states.IState
 import org.catinthedark.itsadeal.lib.atOrFail
 import org.catinthedark.itsadeal.lib.managed
+import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
 
-class BankrotState(
-    private val stage: Stage,
-    private val hud: Stage
-) : IState {
+class BankrotState : IState {
     private val logger = LoggerFactory.getLogger(javaClass)
+    private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
     private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
 
     override fun onActivate() {

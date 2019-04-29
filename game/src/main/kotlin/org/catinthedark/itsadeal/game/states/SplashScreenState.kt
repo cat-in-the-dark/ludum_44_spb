@@ -6,24 +6,29 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.Assets
 import org.catinthedark.itsadeal.lib.IOC
-import org.catinthedark.itsadeal.lib.states.IState
+import org.catinthedark.itsadeal.lib.atOrFail
 import org.catinthedark.itsadeal.lib.managed
+import org.catinthedark.itsadeal.lib.states.IState
+import org.slf4j.LoggerFactory
 
-class SplashScreenState(
-    private val stage: Stage
-): IState {
+class SplashScreenState : IState {
+    private val logger = LoggerFactory.getLogger(javaClass)
+    private val stage: Stage by lazy { IOC.atOrFail<Stage>("stage") }
     private val am: AssetManager by lazy { Assets.load() }
+    private var time = 0f
 
     override fun onActivate() {
-
+        time = 0f
     }
 
     override fun onUpdate() {
+        time += Gdx.graphics.deltaTime
         if (am.update()) {
             IOC.put("state", States.TITLE_SCREEN)
             IOC.put("assetManager", am)
+            logger.info("Assets loaded in $time")
         } else {
-            Gdx.app.log("SplashScreen", "Loading assets...${am.progress}")
+            logger.info("Loading assets...${am.progress}")
         }
 
         if (am.isLoaded(Assets.Names.LOGO, Texture::class.java)) {

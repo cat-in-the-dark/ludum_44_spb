@@ -10,9 +10,8 @@ import org.catinthedark.itsadeal.lib.states.IState
 import org.catinthedark.itsadeal.lib.atOrFail
 import org.catinthedark.itsadeal.lib.managed
 
-class TitleScreenState(
-    private val stage: Stage
-) : IState {
+class TitleScreenState : IState {
+    private val stage: Stage by lazy { IOC.atOrFail<Stage>("stage") }
     private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
     private var time = 0f
     private val SCREEN_TIME = 0.5f

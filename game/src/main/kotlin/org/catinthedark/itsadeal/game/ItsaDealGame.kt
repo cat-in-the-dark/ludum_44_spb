@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 import org.catinthedark.itsadeal.game.states.*
 import org.catinthedark.itsadeal.lib.*
-import org.catinthedark.itsadeal.lib.states.SceneStateMachine
+import org.catinthedark.itsadeal.lib.states.StateMachine
 
 class ItsaDealGame : Game() {
     private val stage: Stage by lazy {
@@ -31,21 +31,21 @@ class ItsaDealGame : Game() {
             ), SpriteBatch()
         )
     }
-    private val sm: SceneStateMachine by lazy {
-        SceneStateMachine().apply {
+    private val sm: StateMachine by lazy {
+        StateMachine().apply {
             putAll(
-                States.SPLASH_SCREEN to SplashScreenState(stage),
-                States.TITLE_SCREEN to TitleScreenState(stage),
+                States.SPLASH_SCREEN to SplashScreenState(),
+                States.TITLE_SCREEN to TitleScreenState(),
                 States.NEW_GAME to StartNewGameState(),
-                States.EMPTY_ROOM to EmptyRoomState(stage, hud),
-                States.WITH_MAN to WithManState(stage, hud),
-                States.WITH_MAN_QUESTION to WithManQuestionState(stage, hud),
-                States.WITH_MAN_ANSWER to WithManAnswerState(stage, hud),
-                States.DOCUMENT_REVIEW to DocumentReviewState(stage, hud),
-                States.FAIL to FailState(stage, hud),
-                States.PROFIT to ProfitState(stage, hud),
-                States.SKIP to SkipState(stage, hud),
-                States.BANKROT to BankrotState(stage, hud)
+                States.EMPTY_ROOM to EmptyRoomState(),
+                States.WITH_MAN to WithManState(),
+                States.WITH_MAN_QUESTION to WithManQuestionState(),
+                States.WITH_MAN_ANSWER to WithManAnswerState(),
+                States.DOCUMENT_REVIEW to DocumentReviewState(),
+                States.FAIL to FailState(),
+                States.PROFIT to ProfitState(),
+                States.SKIP to SkipState(),
+                States.BANKROT to BankrotState()
             )
 
             putMixins(
@@ -73,6 +73,8 @@ class ItsaDealGame : Game() {
 
     override fun create() {
         IOC.put("deffer", Deffer())
+        IOC.put("stage", stage)
+        IOC.put("hud", hud)
         val inputs = InputAdapterHolder(stage)
         Gdx.input.inputProcessor = inputs
         IOC.put("inputs", inputs)

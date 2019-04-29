@@ -13,10 +13,9 @@ import org.catinthedark.itsadeal.lib.*
 import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
 
-class WithManQuestionState(
-    private val stage: Stage,
-    private val hud: Stage
-) : IState {
+class WithManQuestionState: IState {
+    private val stage: Stage by lazy { IOC.atOrFail<Stage>("stage") }
+    private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
     private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
     private val log = LoggerFactory.getLogger(WithManState::class.java)
     private val buttons = listOf(

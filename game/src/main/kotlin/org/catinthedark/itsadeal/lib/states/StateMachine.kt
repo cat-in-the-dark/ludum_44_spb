@@ -4,7 +4,7 @@ import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.lib.atOr
 import org.slf4j.LoggerFactory
 
-class SceneStateMachine {
+class StateMachine {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     private val states: MutableMap<String, IState> = hashMapOf()
