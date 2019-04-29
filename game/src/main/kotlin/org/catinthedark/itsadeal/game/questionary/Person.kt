@@ -53,10 +53,7 @@ class Person(
     }
 
     fun setAnswer(answer: Map.Entry<String, String>) {
-        val answeredQuestionType =
-            questions[answer.key]?.type ?: throw InvalidAnswerException("Question marked as answered was not asked!")
+        questions[answer.key]?.type ?: throw InvalidAnswerException("Question marked as answered was not asked!")
         questions.remove(answer.key)
-        val newQuestion = questionPool.getQuestion(answeredQuestionType)
-        questions[newQuestion.first] = newQuestion.second
     }
 }

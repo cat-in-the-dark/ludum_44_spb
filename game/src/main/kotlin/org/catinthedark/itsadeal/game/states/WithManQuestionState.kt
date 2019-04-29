@@ -49,6 +49,7 @@ class WithManQuestionState(
         val askedQuestions = IOC.atOr("askedQuestions", 0)
 
         if (askedQuestions >= maxAskedQuestions) return
+        if (questionIndex >= questionList.size) return
 
         val answer = questionMap[questionList[questionIndex]]
             ?: throw InvalidAnswerException("No answer at $questionIndex")
@@ -73,7 +74,7 @@ class WithManQuestionState(
             it.draw(am.at<Texture>(Assets.Names.RUKI), 0f, 0f)
             it.draw(am.at<Texture>(personTextures.golova), 0f, 0f)
 
-            it.draw(am.at<Texture>(personTextures.faces), 0f, 0f) // TODO: make kivok
+            it.draw(am.at<Texture>(personTextures.faces), 0f, 0f)
 
             it.draw(am.at<Texture>(personTextures.shlapa), 0f, 0f)
 
@@ -112,28 +113,18 @@ class WithManQuestionState(
         stage.batch.managed {
             it.draw(am.at<Texture>(Assets.Names.MENU), 0f, 0f)
         }
+        var questionIndex = 0
         hud.batch.managed {
-            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
-                .draw(
-                    it,
-                    "- ${questions[0].insertPeriodically("\n", 40)}",
-                    Const.Projection.toHud(60f),
-                    Const.Projection.toHud(44f)
-                )
-            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
-                .draw(
-                    it,
-                    "- ${questions[1].insertPeriodically("\n", 40)}",
-                    Const.Projection.toHud(60f),
-                    Const.Projection.toHud(32f)
-                )
-            am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
-                .draw(
-                    it,
-                    "- ${questions[2].insertPeriodically("\n", 40)}",
-                    Const.Projection.toHud(60f),
-                    Const.Projection.toHud(20f)
-                )
+            questions.forEach { q ->
+                am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
+                    .draw(
+                        it,
+                        "- ${q.insertPeriodically("\n", 40)}",
+                        Const.Projection.toHud(60f),
+                        Const.Projection.toHud(44f - (questionIndex * 12))
+                    )
+                questionIndex++
+            }
         }
     }
 
