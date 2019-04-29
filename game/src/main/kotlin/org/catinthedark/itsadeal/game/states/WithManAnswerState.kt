@@ -8,6 +8,7 @@ import org.catinthedark.itsadeal.game.Assets
 import org.catinthedark.itsadeal.game.Const
 import org.catinthedark.itsadeal.game.PersonTextures
 import org.catinthedark.itsadeal.game.at
+import org.catinthedark.itsadeal.game.questionary.insertPeriodically
 import org.catinthedark.itsadeal.game.ui.Button
 import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.lib.atOr
@@ -51,7 +52,12 @@ class WithManAnswerState : IState {
         // TODO: draw inside menu
         hud.batch.managed {
             am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK)
-                .draw(it, IOC.atOr("current_answer", ""), Const.Projection.toHud(60f), Const.Projection.toHud(46f))
+                .draw(
+                    it,
+                    IOC.atOr("current_answer", "").insertPeriodically("\n", 40),
+                    Const.Projection.toHud(60f),
+                    Const.Projection.toHud(44f)
+                )
 
             am.at<BitmapFont>(Assets.Names.FONT_SMALL_WHITE)
                 .draw(it, "Ясно", Const.Projection.toHud(112f), Const.Projection.toHud(25f))
