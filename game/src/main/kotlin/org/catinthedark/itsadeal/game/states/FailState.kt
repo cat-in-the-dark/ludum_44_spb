@@ -3,36 +3,56 @@ package org.catinthedark.itsadeal.game.states
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.assets.AssetManager
-import com.badlogic.gdx.audio.Music
-import com.badlogic.gdx.audio.Sound
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
+import org.catinthedark.itsadeal.game.Assets.Names.FONT_BIG
+import org.catinthedark.itsadeal.game.Assets.Names.Sounds.JAIL
+import org.catinthedark.itsadeal.game.Assets.Names.Sounds.MUSIC
+import org.catinthedark.itsadeal.game.Const.Projection.tohud
 import org.catinthedark.itsadeal.lib.*
 import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
 
-class FailState: IState {
+class FailState : IState {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
     private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
     private var canSkip = false
+    private val deffer by lazy { IOC.atOrFail<Deffer>("deffer") }
+    private val inputs by lazy { IOC.atOrFail<InputAdapterHolder>("inputs") }
+    private val after = AfterBarrier(1f)
+    private val bail = { Const.Balance.bail(IOC.atOr("reward", 0)) }
 
     override fun onActivate() {
-        am.at<Music>(Assets.Names.Sounds.MUSIC).stop()
-        am.at<Sound>(Assets.Names.Sounds.JAIL).play()
-
-        IOC.atOrFail<Deffer>("deffer").register(1.5f) { canSkip = true }
+        am.music(MUSIC).stop()
+        am.sound(JAIL).play()
+        deffer.register(2f) { canSkip = true }
+        IOC.updateOrSkip<Int>("money") { it - bail() }
     }
 
     override fun onUpdate() {
-        hud.batch.managed {
-            am.at<BitmapFont>(Assets.Names.FONT_BIG)
-                .draw(it, "ПОТРАЧЕНО", 77f, Const.Projection.toHud(128f))
-        }
+        val money: Int by IOC
 
-        if (canSkip && (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || IOC.atOrFail<InputAdapterHolder>("inputs").isMouseClicked)) {
-            IOC.put("state", States.TITLE_SCREEN)
+        hud.batch.managed { b ->
+            am.font(FONT_BIG).draw(b, "Вас подставили!", 77f.tohud(), 128f.tohud())
+            after {
+                if (money >= 0) {
+                    am.font(FONT_BIG).draw(b, "Вы откупились за ${bail()} у.е.", 77f.tohud(), 100f.tohud())
+                    am.font(FONT_BIG).draw(b, "БАЛАНС = $money", 77f.tohud(), 16f.tohud())
+                    handleNext(States.EMPTY_ROOM)
+                } else {
+                    am.font(FONT_BIG).draw(b, "Вы не можете откупиться.", 77f.tohud(), 100f.tohud())
+                    am.font(FONT_BIG).draw(b, "Увидимся через 15 лет.", 77f.tohud(), 90f.tohud())
+                    am.font(FONT_BIG).draw(b, "БАЛАНС = $money", 77f.tohud(), 16f.tohud())
+                    handleNext(States.TITLE_SCREEN)
+                }
+            }
+        }
+    }
+
+    private fun handleNext(state: String) {
+        if (canSkip && (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || inputs.isMouseClicked)) {
+            IOC.put("state", state)
         }
     }
 
