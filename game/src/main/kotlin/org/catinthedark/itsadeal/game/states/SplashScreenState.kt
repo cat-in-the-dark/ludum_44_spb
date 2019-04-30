@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory
 
 class SplashScreenState : IState {
     private val logger = LoggerFactory.getLogger(javaClass)
-    private val stage: Stage by lazy { IOC.atOrFail<Stage>("stage") }
+    private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
     private val am: AssetManager by lazy { Assets.load() }
     private var time = 0f
 
@@ -32,7 +32,7 @@ class SplashScreenState : IState {
         }
 
         if (am.isLoaded(Assets.Names.LOGO, Texture::class.java)) {
-            stage.batch.managed {
+            hud.batch.managed {
                 it.draw(am.get(Assets.Names.LOGO, Texture::class.java), 0f, 0f)
             }
         }

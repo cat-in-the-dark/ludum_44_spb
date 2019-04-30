@@ -11,17 +11,17 @@ import org.catinthedark.itsadeal.lib.atOrFail
 import org.catinthedark.itsadeal.lib.managed
 
 class TitleScreenState : IState {
-    private val stage: Stage by lazy { IOC.atOrFail<Stage>("stage") }
+    private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
     private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
     private var time = 0f
     private val SCREEN_TIME = 0.5f
 
     override fun onActivate() {
-
+        time = 0f
     }
 
     override fun onUpdate() {
-        stage.batch.managed {
+        hud.batch.managed {
             it.draw(am.get(Assets.Names.TITLE, Texture::class.java), 0f, 0f)
         }
         time += Gdx.graphics.deltaTime
