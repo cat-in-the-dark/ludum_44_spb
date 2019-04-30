@@ -1,5 +1,7 @@
 package org.catinthedark.itsadeal.game.states
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -30,7 +32,7 @@ class EmptyRoomState : IState {
     }
 
     override fun onUpdate() {
-        if (inputs.isMouseClicked && !clicked) {
+        if ((inputs.isMouseClicked || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) && !clicked) {
             clicked = true
             am.sound(NEXT).play()
             deffer.register(0.75f) {
