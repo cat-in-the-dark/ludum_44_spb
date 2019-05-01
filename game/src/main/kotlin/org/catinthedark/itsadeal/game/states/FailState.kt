@@ -9,6 +9,7 @@ import org.catinthedark.itsadeal.game.Assets.Names.FONT_BIG
 import org.catinthedark.itsadeal.game.Assets.Names.Sounds.JAIL
 import org.catinthedark.itsadeal.game.Assets.Names.Sounds.MUSIC
 import org.catinthedark.itsadeal.game.Const.Projection.tohud
+import org.catinthedark.itsadeal.game.texts.Texts
 import org.catinthedark.itsadeal.lib.*
 import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory

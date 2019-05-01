@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.game.Const.Projection.tohud
+import org.catinthedark.itsadeal.game.texts.Texts
 import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.lib.atOrFail
 import org.catinthedark.itsadeal.lib.managed

@@ -1,5 +1,6 @@
 package org.catinthedark.itsadeal.game
 
+import org.catinthedark.itsadeal.game.texts.Texts
 import org.catinthedark.itsadeal.lib.IOC
 import kotlin.math.max
 
@@ -41,14 +42,14 @@ object Const {
             return 0
         }
 
-        fun nextAchievement(money: Int): Pair<Int, String> {
-            if (money < 200) return 200 to "Костюм"
-            if (money < 3200) return 3200 to "Часы"
-            if (money < 25000) return 25000 to "Тачка"
-            if (money < 195200) return 195200 to "Пентхаус"
-            if (money < 1578000) return 1578000 to "Вилла"
-            if (money < 9999999) return 9999999 to "Яхта"
-            if (money < 99000000) return 99000000 to "Самолет"
+        fun nextAchievement(money: Int, txt: Texts): Pair<Int, String> {
+            if (money < 200) return 200 to txt.achievments[0]
+            if (money < 3200) return 3200 to txt.achievments[1]
+            if (money < 25000) return 25000 to txt.achievments[2]
+            if (money < 195200) return 195200 to txt.achievments[3]
+            if (money < 1578000) return 1578000 to txt.achievments[4]
+            if (money < 9999999) return 9999999 to txt.achievments[5]
+            if (money < 99000000) return 99000000 to txt.achievments[6]
             return Int.MAX_VALUE to GG
         }
 

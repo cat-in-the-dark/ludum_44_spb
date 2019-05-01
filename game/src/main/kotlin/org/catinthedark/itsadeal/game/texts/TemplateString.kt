@@ -1,4 +1,4 @@
-package org.catinthedark.itsadeal.game.questionary
+package org.catinthedark.itsadeal.game.texts
 
 data class TemplateString(private val template: String, private val substitution: List<List<String>>) {
 

@@ -8,6 +8,7 @@ import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.game.Assets.Names.FONT_BIG
 import org.catinthedark.itsadeal.game.Assets.Names.Sounds.UNPROFIT
 import org.catinthedark.itsadeal.game.Const.Projection.tohud
+import org.catinthedark.itsadeal.game.texts.Texts
 import org.catinthedark.itsadeal.lib.*
 import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
@@ -32,7 +33,7 @@ class SkipState : IState {
     override fun onUpdate() {
         val money: Int by IOC
         val txt: Texts by IOC
-        val (achCost, achName) = Const.Balance.nextAchievement(money)
+        val (achCost, achName) = Const.Balance.nextAchievement(money, txt)
 
         hud.batch.managed {
             am.font(FONT_BIG).draw(it, txt.rejected, 77f.tohud(), 128f.tohud())

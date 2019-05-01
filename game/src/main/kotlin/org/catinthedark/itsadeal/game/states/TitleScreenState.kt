@@ -5,11 +5,11 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.Assets
-import org.catinthedark.itsadeal.game.Texts
+import org.catinthedark.itsadeal.game.texts.RuTexts
 import org.catinthedark.itsadeal.lib.IOC
-import org.catinthedark.itsadeal.lib.states.IState
 import org.catinthedark.itsadeal.lib.atOrFail
 import org.catinthedark.itsadeal.lib.managed
+import org.catinthedark.itsadeal.lib.states.IState
 
 class TitleScreenState : IState {
     private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
@@ -19,7 +19,7 @@ class TitleScreenState : IState {
 
     override fun onActivate() {
         time = 0f
-        IOC.put("txt", Texts())
+        IOC.put("txt", RuTexts())
     }
 
     override fun onUpdate() {

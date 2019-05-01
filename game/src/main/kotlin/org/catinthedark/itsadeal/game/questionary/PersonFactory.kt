@@ -1,6 +1,7 @@
 package org.catinthedark.itsadeal.game.questionary
 
 import org.catinthedark.itsadeal.game.Const.Balance.incriminatingFactor
+import org.catinthedark.itsadeal.game.texts.Texts
 import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.lib.atOr
 import kotlin.random.Random
@@ -14,9 +15,10 @@ class PersonFactory {
 
     fun getRandomPerson(): Person {
         val money = IOC.atOr("money", 0)
+        val txt: Texts by IOC
 
         val isBad = if (randomPool.isNotEmpty()) randomPool.removeAt(0) else nextBool()
-        return Person(isBad, incriminatingFactor(money))
+        return Person(isBad, incriminatingFactor(money), txt)
     }
 
     private fun nextBool() = Random(System.currentTimeMillis()).nextBoolean()

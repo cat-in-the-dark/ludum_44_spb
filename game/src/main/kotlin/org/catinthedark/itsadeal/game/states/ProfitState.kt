@@ -9,6 +9,7 @@ import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.game.Assets.Names.FONT_BIG
 import org.catinthedark.itsadeal.game.Const.Balance.GG
 import org.catinthedark.itsadeal.game.Const.Projection.tohud
+import org.catinthedark.itsadeal.game.texts.Texts
 import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.lib.atOrFail
 import org.catinthedark.itsadeal.lib.managed
@@ -34,7 +35,7 @@ class ProfitState : IState {
         val txt: Texts by IOC
         val reward: Int by IOC
         val money: Int by IOC
-        val (achCost, achName) = Const.Balance.nextAchievement(money)
+        val (achCost, achName) = Const.Balance.nextAchievement(money, txt)
 
         hud.batch.managed {
             if (achName == GG) {

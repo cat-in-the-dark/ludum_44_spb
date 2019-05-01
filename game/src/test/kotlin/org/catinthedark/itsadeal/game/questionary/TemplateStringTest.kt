@@ -1,5 +1,6 @@
 package org.catinthedark.itsadeal.game.questionary
 
+import org.catinthedark.itsadeal.game.texts.TemplateString
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test

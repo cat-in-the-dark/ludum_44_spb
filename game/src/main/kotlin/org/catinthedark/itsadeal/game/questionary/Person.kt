@@ -1,5 +1,6 @@
 package org.catinthedark.itsadeal.game.questionary
 
+import org.catinthedark.itsadeal.game.texts.Texts
 import org.catinthedark.itsadeal.game.exceptions.InvalidAnswerException
 import org.catinthedark.itsadeal.game.exceptions.InvalidFractionException
 import org.slf4j.LoggerFactory
@@ -7,12 +8,13 @@ import org.slf4j.LoggerFactory
 class Person(
     val isEvil: Boolean,
     //todo: handle evil man
-    private val incriminatingPart: Float
+    private val incriminatingPart: Float,
+    private val txt: Texts
 ) {
 
 
     private val log = LoggerFactory.getLogger(Person::class.java)
-    private val questionPool = QuestionPool()
+    private val questionPool = QuestionPool(txt)
 
     init {
         log.info("Got person, evil = $isEvil")
