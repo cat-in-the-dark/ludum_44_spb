@@ -9,7 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 import org.catinthedark.itsadeal.game.states.*
-import org.catinthedark.itsadeal.lib.*
+import org.catinthedark.itsadeal.game.testing.Autopilot
+import org.catinthedark.itsadeal.lib.Deffer
+import org.catinthedark.itsadeal.lib.DefferImpl
+import org.catinthedark.itsadeal.lib.IOC
+import org.catinthedark.itsadeal.lib.atOrFail
 import org.catinthedark.itsadeal.lib.states.StateMachine
 
 class ItsaDealGame : Game() {
@@ -67,6 +71,7 @@ class ItsaDealGame : Game() {
                     IOC.put("state", States.TITLE_SCREEN)
                 }
                 IOC.atOrFail<InputAdapterHolder>("inputs").update()
+                IOC.atOrFail<Autopilot>("autopilot").update()
             }
         }
     }
@@ -74,12 +79,13 @@ class ItsaDealGame : Game() {
     private val deffer: Deffer by lazy { IOC.atOrFail<Deffer>("deffer") }
 
     override fun create() {
-        IOC.put("deffer", Deffer())
+        IOC.put("deffer", DefferImpl())
         IOC.put("stage", stage)
         IOC.put("hud", hud)
         val inputs = InputAdapterHolder(stage)
         Gdx.input.inputProcessor = inputs
         IOC.put("inputs", inputs)
+        IOC.put("autopilot", Autopilot())
         IOC.put("state", States.SPLASH_SCREEN)
     }
 

@@ -37,7 +37,7 @@ class WithManState : IState {
 
     override fun onActivate() {
         pin = 0
-        localDeffer = Deffer()
+        localDeffer = DefferImpl()
         doBlink()
     }
 

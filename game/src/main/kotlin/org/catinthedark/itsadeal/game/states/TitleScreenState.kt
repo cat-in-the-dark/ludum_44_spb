@@ -8,9 +8,11 @@ import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.game.Assets.Names.FONT_MEDIUM_BLACK
 import org.catinthedark.itsadeal.game.Assets.Names.FONT_SMALL_BLACK
 import org.catinthedark.itsadeal.game.Const.Projection.tohud
+import org.catinthedark.itsadeal.game.testing.Autopilot
 import org.catinthedark.itsadeal.game.texts.RuTexts
 import org.catinthedark.itsadeal.game.texts.Texts
 import org.catinthedark.itsadeal.lib.IOC
+import org.catinthedark.itsadeal.lib.at
 import org.catinthedark.itsadeal.lib.atOrFail
 import org.catinthedark.itsadeal.lib.managed
 import org.catinthedark.itsadeal.lib.states.IState
@@ -36,6 +38,11 @@ class TitleScreenState : IState {
         am.music(Assets.Names.Sounds.MUSIC).stop()
         IOC.put("txt", RuTexts())
         IOC.put("showTutor", true)
+        val autopilot = IOC.at<Autopilot>("autopilot")
+        if (autopilot != null) {
+            logger.info("It took autopilot ${autopilot.steps} steps to beat this game")
+            autopilot.reset()
+        }
     }
 
     override fun onUpdate() {
