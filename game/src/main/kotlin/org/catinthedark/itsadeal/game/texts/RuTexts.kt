@@ -17,6 +17,9 @@ class RuTexts : Texts {
     override val goal = { achName: String, achCost: Int -> "Цель: $achName за $achCost у.е" }
     override val payment = { credit: Int -> "Плата за крышу: $credit у.е." }
     override val rejected = "Отказано"
+    override val reject = "Отказать"
+    override val accept = "Принять"
+    override val back = "Назад"
     override val achievments = listOf(
         "Костюм",
         "Часы",

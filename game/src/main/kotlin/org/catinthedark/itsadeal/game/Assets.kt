@@ -81,6 +81,15 @@ object Assets {
                     fontParameters.color = Color.BLACK
                     fontFileName = "fonts/cyrfont.ttf"
                 })
+            load(
+                Names.FONT_MEDIUM_WHITE,
+                BitmapFont::class.java,
+                FreetypeFontLoader.FreeTypeFontLoaderParameter().apply {
+                    fontParameters.size = 32
+                    fontParameters.characters = RUSSIAN_CHARACTERS
+                    fontParameters.color = Color.WHITE
+                    fontFileName = "fonts/cyrfont.ttf"
+                })
         }
     }
 
@@ -91,13 +100,13 @@ object Assets {
         val FONT_SMALL_GRAY = "font_small_gray.ttf"
         val FONT_SMALL_WHITE = "font_small_white.ttf"
         val FONT_MEDIUM_BLACK = "font_medium_black.ttf"
+        val FONT_MEDIUM_WHITE = "font_medium_white.ttf"
         val FONT_BIG_SERIF = "font_big_serif.ttf"
         val LOGO = "textures/logo.png"
         val TITLE = "textures/title.png"
         val STOL = "textures/STOL.png"
         val BODY01 = "textures/BODY01.png"
         val RUKI = "textures/RUKI.png"
-        val DOCUMENT = "textures/document.png"
         val DOCUMENT_LEJIT = "textures/DOCMENT_lejit.png"
         val ROOM = "textures/KOMANTA.png"
         val MENU = "textures/MENU.png"
@@ -111,7 +120,6 @@ object Assets {
             STOL,
             BODY01,
             RUKI,
-            DOCUMENT,
             DOCUMENT_LEJIT,
             ROOM,
             MENU,

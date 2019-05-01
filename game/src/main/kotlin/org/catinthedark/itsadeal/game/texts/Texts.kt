@@ -22,6 +22,9 @@ interface Texts {
     val subjectToIssuer: Map<String, String>
     val subjects: Collection<String>
     val ok: String
+    val reject: String
+    val accept: String
+    val back: String
     /**
      * Map<String, Pair<String, String>> - question, neutral answer, incriminating answer
      */
