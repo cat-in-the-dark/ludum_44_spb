@@ -9,10 +9,7 @@ import org.catinthedark.itsadeal.game.states.States.EMPTY_ROOM
 import org.catinthedark.itsadeal.game.states.States.PROFIT
 import org.catinthedark.itsadeal.game.states.States.SKIP
 import org.catinthedark.itsadeal.game.states.States.WITH_MAN
-import org.catinthedark.itsadeal.lib.IOC
-import org.catinthedark.itsadeal.lib.NoDeffer
-import org.catinthedark.itsadeal.lib.atOr
-import org.catinthedark.itsadeal.lib.atOrFail
+import org.catinthedark.itsadeal.lib.*
 import org.slf4j.LoggerFactory
 
 class Autopilot {
@@ -20,13 +17,18 @@ class Autopilot {
     private var pin = 0
     private var activated = false
     private val logger = LoggerFactory.getLogger(Autopilot::class.java)
+    private val moneys = mutableListOf<Int>()
 
     var steps: Int = 0
 
     fun reset() {
+        logger.info("It took autopilot $steps steps to beat this game")
+        logger.info("Money history = $moneys")
         steps = 0
         activated = false
         pin = 0
+        IOC.put("deffer", DefferImpl())
+        moneys.clear()
     }
 
     fun update() {
@@ -51,7 +53,7 @@ class Autopilot {
 
         if (state == WITH_MAN) {
             val money: Int by IOC
-            logger.info("Money: $money")
+            moneys.add(money)
             inputs.mouseX = 1
             inputs.mouseY = 1
             inputs.isMouseClicked = true
@@ -96,6 +98,7 @@ class Autopilot {
         }
 
         if (pin == 1231) {
+            moneys.clear()
             logger.info("Auto player unlocked!")
             IOC.put("deffer", NoDeffer())
             activated = true

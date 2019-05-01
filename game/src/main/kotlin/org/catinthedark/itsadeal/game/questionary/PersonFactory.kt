@@ -16,7 +16,7 @@ class PersonFactory {
     private val randomPool: MutableList<Boolean> = mutableListOf()
 
     private fun putNextPool(list: MutableList<Boolean>) {
-        list.addAll(listOf(1, 1, 1, 0, 0, 0).map { it == 0 }.shuffled())
+        list.addAll(listOf(1, 1, 1, 1, 0, 0, 0).map { it == 0 }.shuffled())
     }
 
     fun getRandomPerson(): Person {

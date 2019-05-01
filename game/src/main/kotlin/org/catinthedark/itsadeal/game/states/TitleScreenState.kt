@@ -40,7 +40,6 @@ class TitleScreenState : IState {
         IOC.put("showTutor", true)
         val autopilot = IOC.at<Autopilot>("autopilot")
         if (autopilot != null) {
-            logger.info("It took autopilot ${autopilot.steps} steps to beat this game")
             autopilot.reset()
         }
     }

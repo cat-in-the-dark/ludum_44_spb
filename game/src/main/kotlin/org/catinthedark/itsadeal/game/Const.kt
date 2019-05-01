@@ -29,17 +29,17 @@ object Const {
         // TODO: emulate it with monte carlo
 
         fun everyDayCredit(money: Int): Int {
-            return max((money * 0.13).toInt(), 50)
+            return max((money * 0.07).toInt(), 30)
         }
 
         fun generateReward(money: Int): Int {
-            if (money < 200) return (40..140).random()
-            if (money < 3200) return (640..2240).random()
-            if (money < 25000) return (5000..17500).random()
-            if (money < 195200) return (39040..136640).random()
-            if (money < 1578000) return (315600..1104600).random()
-            if (money < 9999999) return (2000000..6999999).random()
-            if (money < 99000000) return (19800000..69300000).random()
+            if (money < 200) return (140..160).random()
+            if (money < 3200) return (1250..2240).random()
+            if (money < 25000) return (12500..17500).random()
+            if (money < 195200) return (95040..106640).random()
+            if (money < 1578000) return (975600..1104600).random()
+            if (money < 9999999) return (5785000..5999999).random()
+            if (money < 99000000) return (64800000..69300000).random()
             return 0
         }
 
