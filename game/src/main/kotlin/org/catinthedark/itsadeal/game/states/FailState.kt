@@ -59,7 +59,7 @@ class FailState : IState {
     }
 
     override fun onExit() {
-
+        IOC.put("showTutor", false)
     }
 
 }

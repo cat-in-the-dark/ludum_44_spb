@@ -25,9 +25,15 @@ interface Texts {
     val reject: String
     val accept: String
     val back: String
+    val noQuestions: String
     /**
      * Map<String, Pair<String, String>> - question, neutral answer, incriminating answer
      */
     val questionTemplates: Map<TemplateString, Pair<TemplateString, TemplateString>>
     val achievments: List<String>
+
+    val tutorPressDoorToNext: String
+    val tutorClickPerson: String
+    val tutorClickDoc: String
+    val story: String
 }

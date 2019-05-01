@@ -22,6 +22,7 @@ object Const {
     }
 
     object Balance {
+        const val maxAskedQuestions = 3
         const val START_MONEY = 150
         const val GG = "GG"
 

@@ -7,9 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.*
 import org.catinthedark.itsadeal.game.Assets.Names.FONT_SMALL_BLACK
 import org.catinthedark.itsadeal.game.Assets.Names.FONT_SMALL_GRAY
+import org.catinthedark.itsadeal.game.Const.Balance.maxAskedQuestions
 import org.catinthedark.itsadeal.game.exceptions.InvalidAnswerException
 import org.catinthedark.itsadeal.game.questionary.Person
 import org.catinthedark.itsadeal.game.questionary.insertPeriodically
+import org.catinthedark.itsadeal.game.texts.Texts
 import org.catinthedark.itsadeal.game.ui.Button
 import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.lib.atOr
@@ -29,11 +31,11 @@ class WithManQuestionState : IState {
         2 to FONT_SMALL_BLACK
     )
     private val buttons = listOf(
-        Button(60, 32, 190, 44, onClick = {
+        Button(60, 33, 190, 44, onClick = {
             // First
             answer(0)
         }, onHover = { fontColors[0] = FONT_SMALL_GRAY }),
-        Button(60, 20, 190, 32, onClick = {
+        Button(60, 21, 190, 32, onClick = {
             // Second
             answer(1)
         }, onHover = { fontColors[1] = FONT_SMALL_GRAY }),
@@ -42,15 +44,13 @@ class WithManQuestionState : IState {
             answer(2)
         }, onHover = { fontColors[2] = FONT_SMALL_GRAY })
     )
-    private val maxAskedQuestions = 3
-    private val noQuestions = "Вопросов больше нет."
 
     override fun onActivate() {
 
     }
 
     private fun answer(questionIndex: Int) {
-        val askedQuestions = IOC.atOr("askedQuestions", 0)
+        val askedQuestions: Int by IOC
         if (askedQuestions >= maxAskedQuestions) return
 
         val person = IOC.atOrFail<Person>("person")
@@ -108,10 +108,11 @@ class WithManQuestionState : IState {
     }
 
     private fun drawNoQuestions() {
+        val txt: Texts by IOC
         hud.batch.managed {
             am.at<BitmapFont>(Assets.Names.FONT_SMALL_BLACK).draw(
                 it,
-                noQuestions,
+                txt.noQuestions,
                 Const.Projection.toHud(94f),
                 Const.Projection.toHud(28f)
             )

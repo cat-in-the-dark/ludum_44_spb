@@ -36,6 +36,7 @@ class ItsaDealGame : Game() {
             putAll(
                 States.SPLASH_SCREEN to SplashScreenState(),
                 States.TITLE_SCREEN to TitleScreenState(),
+                States.STORY to StoryState(),
                 States.NEW_GAME to StartNewGameState(),
                 States.EMPTY_ROOM to EmptyRoomState(),
                 States.WITH_MAN to WithManState(),
@@ -47,7 +48,8 @@ class ItsaDealGame : Game() {
                 States.SKIP to SkipState(),
                 States.BANKROT to BankrotState()
             )
-
+            putMixin(States.EMPTY_ROOM, emptyRoomTutor)
+            putMixin(States.WITH_MAN, withManTutor)
             putMixins(
                 States.TITLE_SCREEN,
                 States.NEW_GAME,

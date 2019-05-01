@@ -50,7 +50,7 @@ class SkipState : IState {
     }
 
     override fun onExit() {
-
+        IOC.put("showTutor", false)
     }
 
     private fun isBankrot(): Boolean {

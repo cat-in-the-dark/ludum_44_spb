@@ -15,7 +15,6 @@ import org.catinthedark.itsadeal.lib.atOrFail
 import org.catinthedark.itsadeal.lib.managed
 import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
-import kotlin.math.log
 
 class TitleScreenState : IState {
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -36,6 +35,7 @@ class TitleScreenState : IState {
     override fun onActivate() {
         am.music(Assets.Names.Sounds.MUSIC).stop()
         IOC.put("txt", RuTexts())
+        IOC.put("showTutor", true)
     }
 
     override fun onUpdate() {
@@ -61,7 +61,7 @@ class TitleScreenState : IState {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            IOC.put("state", States.NEW_GAME)
+            IOC.put("state", States.STORY)
         }
     }
 

@@ -58,7 +58,7 @@ class ProfitState : IState {
     }
 
     override fun onExit() {
-
+        IOC.put("showTutor", false)
     }
 
 }

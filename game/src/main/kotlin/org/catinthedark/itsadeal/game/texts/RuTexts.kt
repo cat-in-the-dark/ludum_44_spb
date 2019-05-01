@@ -1,6 +1,10 @@
 package org.catinthedark.itsadeal.game.texts
 
 class RuTexts : Texts {
+    override val tutorPressDoorToNext = "Кликните мышью на дверь,\nчтобы пригласить агента."
+    override val tutorClickPerson = "Кликните мышью на агента,\nчтобы задать ему вопрос."
+    override val tutorClickDoc = "Кликните мышью на документ"
+    override val story = "Вы амбициозный чиновник, который хочет улететь\nна самолете на острова. Но с вашей ЗП вы\nникогда не сможете себе это позволить.\nК счастью, люди часто приносят вам деньги\nи вы их берете.\n\nНо остерегайтесь оборотней в погонах.\nУ них деньги брать нельзя!\n\n\nНажмите пробел, чтобы начать"
     override val gameName = "It's a deal"
     override val pressToStart = "Нажмите Пробел, чтобы начать"
     override val ok = "Ясно"
@@ -20,6 +24,7 @@ class RuTexts : Texts {
     override val reject = "Отказать"
     override val accept = "Принять"
     override val back = "Назад"
+    override val noQuestions = "Вопросов больше нет."
     override val achievments = listOf(
         "Костюм",
         "Часы",
