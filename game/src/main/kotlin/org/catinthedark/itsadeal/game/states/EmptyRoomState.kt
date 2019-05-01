@@ -10,6 +10,7 @@ import org.catinthedark.itsadeal.game.Assets.Names.Sounds.NEXT
 import org.catinthedark.itsadeal.game.InputAdapterHolder
 import org.catinthedark.itsadeal.game.at
 import org.catinthedark.itsadeal.game.sound
+import org.catinthedark.itsadeal.game.ui.Button
 import org.catinthedark.itsadeal.lib.Deffer
 import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.lib.atOrFail
@@ -22,22 +23,25 @@ class EmptyRoomState : IState {
     private val stage: Stage by lazy { IOC.atOrFail<Stage>("stage") }
     private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
     private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
-    private val inputs: InputAdapterHolder by lazy { IOC.atOrFail<InputAdapterHolder>("inputs") }
     private val deffer: Deffer by lazy { IOC.atOrFail<Deffer>("deffer") }
     private var clicked = false
+    private val doorBtn = Button(45,48,105,125, onClick = { callNext() })
 
+    private fun callNext() {
+        if (clicked) return
+        am.sound(NEXT).play()
+        deffer.register(0.75f) {
+            IOC.put("state", States.WITH_MAN)
+        }
+    }
 
     override fun onActivate() {
         clicked = false
     }
 
     override fun onUpdate() {
-        if ((inputs.isMouseClicked || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) && !clicked) {
-            clicked = true
-            am.sound(NEXT).play()
-            deffer.register(0.75f) {
-                IOC.put("state", States.WITH_MAN)
-            }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            callNext()
         }
 
         stage.batch.managed {
@@ -47,6 +51,7 @@ class EmptyRoomState : IState {
         }
 
         moneyHud(stage, hud, am)
+        doorBtn.update()
     }
 
     override fun onExit() {
