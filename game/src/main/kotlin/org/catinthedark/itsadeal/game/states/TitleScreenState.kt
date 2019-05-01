@@ -34,6 +34,7 @@ class TitleScreenState : IState {
     private val speed = 25f
 
     override fun onActivate() {
+        am.music(Assets.Names.Sounds.MUSIC).stop()
         IOC.put("txt", RuTexts())
     }
 
