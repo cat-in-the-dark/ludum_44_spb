@@ -1,8 +1,7 @@
 package org.catinthedark.itsadeal.game
 
 import org.catinthedark.itsadeal.lib.IOC
-import org.catinthedark.itsadeal.lib.getValue
-import org.catinthedark.itsadeal.lib.updateOrFail
+import kotlin.math.max
 
 object Const {
     object Screen {
@@ -25,15 +24,10 @@ object Const {
         const val START_MONEY = 150
         const val GG = "GG"
 
+        // TODO: emulate it with monte carlo
+
         fun everyDayCredit(money: Int): Int {
-            if (money < 200) return 50
-            if (money < 3200) return 416
-            if (money < 25000) return 3250
-            if (money < 195200) return 25376
-            if (money < 1578000) return 205140
-            if (money < 9999999) return 1300000
-            if (money < 99000000) return 12870000
-            return 0
+            return max((money * 0.13).toInt(), 50)
         }
 
         fun generateReward(money: Int): Int {

@@ -13,11 +13,13 @@ object IOC {
     fun get(name: String): Any? {
         return container[name]
     }
+
+    inline operator fun <reified T> getValue(thisRef: Any?, property: KProperty<*>) =
+        IOC.atOrFail<T>(property.name)
+
+    inline operator fun <reified T> setValue(thisRef: Any?, property: KProperty<*>, value: T) =
+        put(property.name, value)
 }
-
-inline operator fun <reified T> IOC.getValue(thisRef: Any?, property: KProperty<*>) = IOC.atOrFail<T>(property.name)
-
-inline operator fun <reified T> IOC.setValue(thisRef: Any?, property: KProperty<*>, value: T) = put(property.name, value)
 
 inline fun <reified T> IOC.at(name: String): T? {
     val obj = get(name)

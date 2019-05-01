@@ -7,10 +7,10 @@ import org.catinthedark.itsadeal.game.Const
 import org.catinthedark.itsadeal.game.at
 import org.catinthedark.itsadeal.game.questionary.PersonFactory
 import org.catinthedark.itsadeal.lib.IOC
-import org.catinthedark.itsadeal.lib.states.IState
 import org.catinthedark.itsadeal.lib.atOrFail
+import org.catinthedark.itsadeal.lib.states.IState
 
-class StartNewGameState: IState {
+class StartNewGameState : IState {
     override fun onActivate() {
         IOC.put("money", Const.Balance.START_MONEY)
         IOC.put("state", States.EMPTY_ROOM)

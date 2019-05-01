@@ -31,19 +31,20 @@ class FailState : IState {
     }
 
     override fun onUpdate() {
+        val txt: Texts by IOC
         val money: Int by IOC
 
         hud.batch.managed { b ->
-            am.font(FONT_BIG).draw(b, "Вас подставили!", 77f.tohud(), 128f.tohud())
+            am.font(FONT_BIG).draw(b, txt.failTitle, 77f.tohud(), 128f.tohud())
             after {
                 if (money >= 0) {
-                    am.font(FONT_BIG).draw(b, "Вы откупились за ${bail()} у.е.", 77f.tohud(), 100f.tohud())
-                    am.font(FONT_BIG).draw(b, "БАЛАНС = $money", 77f.tohud(), 16f.tohud())
+                    am.font(FONT_BIG).draw(b, txt.bail.format(bail()), 77f.tohud(), 100f.tohud())
+                    am.font(FONT_BIG).draw(b, txt.money(money), 77f.tohud(), 16f.tohud())
                     handleNext(States.EMPTY_ROOM)
                 } else {
-                    am.font(FONT_BIG).draw(b, "Вы не можете откупиться.", 77f.tohud(), 100f.tohud())
-                    am.font(FONT_BIG).draw(b, "Увидимся через 15 лет.", 77f.tohud(), 90f.tohud())
-                    am.font(FONT_BIG).draw(b, "БАЛАНС = $money", 77f.tohud(), 16f.tohud())
+                    am.font(FONT_BIG).draw(b, txt.cantBail, 77f.tohud(), 100f.tohud())
+                    am.font(FONT_BIG).draw(b, txt.seeYou, 77f.tohud(), 90f.tohud())
+                    am.font(FONT_BIG).draw(b,txt.money(money), 77f.tohud(), 16f.tohud())
                     handleNext(States.TITLE_SCREEN)
                 }
             }

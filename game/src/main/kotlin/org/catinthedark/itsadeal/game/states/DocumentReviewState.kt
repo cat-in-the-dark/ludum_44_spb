@@ -13,10 +13,7 @@ import org.catinthedark.itsadeal.game.questionary.DocContent
 import org.catinthedark.itsadeal.game.questionary.Person
 import org.catinthedark.itsadeal.game.questionary.insertPeriodically
 import org.catinthedark.itsadeal.game.ui.Button
-import org.catinthedark.itsadeal.lib.Deffer
-import org.catinthedark.itsadeal.lib.IOC
-import org.catinthedark.itsadeal.lib.atOrFail
-import org.catinthedark.itsadeal.lib.managed
+import org.catinthedark.itsadeal.lib.*
 import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
 
@@ -56,19 +53,13 @@ class DocumentReviewState : IState {
     }
 
     override fun onUpdate() {
+        val docTexture: String by IOC
         buttons.forEach { it.update() }
         stage.batch.managed {
-            //            it.draw(am.at<Texture>(personTextures.body), 0f, 0f)
             it.draw(am.at<Texture>(Assets.Names.ROOM), 0f, 0f)
             it.draw(am.at<Texture>(Assets.Names.STOL), 0f, 0f)
             it.draw(am.at<Texture>(Assets.Names.RUKI), 0f, 0f)
-//            it.draw(am.at<Texture>(personTextures.golova), 0f, 0f)
-
-//            it.draw(am.at<Texture>(personTextures.faces), 0f, 0f) // TODO: make kivok
-
-//            it.draw(am.at<Texture>(personTextures.shlapa), 0f, 0f)
-
-            it.draw(am.at<Texture>(IOC.atOrFail("docTexture")), 0f, 0f)
+            it.draw(am.at<Texture>(docTexture), 0f, 0f)
             it.draw(am.at<Texture>(Assets.Names.DOCUMENT), 0f, 0f)
         }
 

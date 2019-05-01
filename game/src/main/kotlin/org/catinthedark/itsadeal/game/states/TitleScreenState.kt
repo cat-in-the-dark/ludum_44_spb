@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.Stage
 import org.catinthedark.itsadeal.game.Assets
+import org.catinthedark.itsadeal.game.Texts
 import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.lib.states.IState
 import org.catinthedark.itsadeal.lib.atOrFail
@@ -18,6 +19,7 @@ class TitleScreenState : IState {
 
     override fun onActivate() {
         time = 0f
+        IOC.put("txt", Texts())
     }
 
     override fun onUpdate() {

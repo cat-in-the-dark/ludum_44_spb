@@ -11,7 +11,6 @@ import org.catinthedark.itsadeal.game.Const.Balance.GG
 import org.catinthedark.itsadeal.game.Const.Projection.tohud
 import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.lib.atOrFail
-import org.catinthedark.itsadeal.lib.getValue
 import org.catinthedark.itsadeal.lib.managed
 import org.catinthedark.itsadeal.lib.states.IState
 import org.slf4j.LoggerFactory
@@ -20,6 +19,7 @@ class ProfitState : IState {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
     private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
+    private val inputs by lazy { IOC.atOrFail<InputAdapterHolder>("inputs") }
     private var credit = 0
 
     override fun onActivate() {
@@ -31,31 +31,25 @@ class ProfitState : IState {
     }
 
     override fun onUpdate() {
+        val txt: Texts by IOC
         val reward: Int by IOC
         val money: Int by IOC
         val (achCost, achName) = Const.Balance.nextAchievement(money)
 
         hud.batch.managed {
             if (achName == GG) {
-                am.font(FONT_BIG)
-                    .draw(it, "Успешный успех!", 77f.tohud(), 128f.tohud())
-                am.font(FONT_BIG)
-                    .draw(it, "Вы накопили на самолет\n и улетели на острова", 77f.tohud(), 118f.tohud())
-                am.font(FONT_BIG)
-                    .draw(it, "БАЛАНС = $money у.е.", 77f.tohud(), 16f.tohud())
-                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || IOC.atOrFail<InputAdapterHolder>("inputs").isMouseClicked) {
+                am.font(FONT_BIG).draw(it, txt.win, 77f.tohud(), 128f.tohud())
+                am.font(FONT_BIG).draw(it, txt.winDescription, 77f.tohud(), 118f.tohud())
+                am.font(FONT_BIG).draw(it, txt.money(money), 77f.tohud(), 16f.tohud())
+                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || inputs.isMouseClicked) {
                     IOC.put("state", States.TITLE_SCREEN)
                 }
             } else {
-                am.font(FONT_BIG)
-                    .draw(it, "ПРОФИТ +$reward у.е.", 77f.tohud(), 128f.tohud())
-                am.font(FONT_BIG)
-                    .draw(it, "Хотите $achName за $achCost у.е", 77f.tohud(), 36f.tohud())
-                am.font(FONT_BIG)
-                    .draw(it, "Плата за крышу $credit у.е.", 77f.tohud(), 26f.tohud())
-                am.font(FONT_BIG)
-                    .draw(it, "БАЛАНС = $money у.е.", 77f.tohud(), 16f.tohud())
-                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || IOC.atOrFail<InputAdapterHolder>("inputs").isMouseClicked) {
+                am.font(FONT_BIG).draw(it, txt.profit.format(reward), 77f.tohud(), 128f.tohud())
+                am.font(FONT_BIG).draw(it, txt.goal(achName, achCost), 77f.tohud(), 36f.tohud())
+                am.font(FONT_BIG).draw(it, txt.payment(credit), 77f.tohud(), 26f.tohud())
+                am.font(FONT_BIG).draw(it, txt.money(money), 77f.tohud(), 16f.tohud())
+                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || inputs.isMouseClicked) {
                     IOC.put("state", States.EMPTY_ROOM)
                 }
             }

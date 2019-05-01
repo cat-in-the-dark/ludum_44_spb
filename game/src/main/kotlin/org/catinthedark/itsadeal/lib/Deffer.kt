@@ -28,7 +28,6 @@ class Deffer {
                 } catch (e: Exception) {
                     log.error("Can't call deffer func: ${e.message}", e)
                 }
-                log.info("remove func from deffer at ${Thread.currentThread().name}")
                 funcs.remove(it.key)
             }
         }
