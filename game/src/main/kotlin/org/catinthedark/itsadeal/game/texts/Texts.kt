@@ -2,6 +2,8 @@ package org.catinthedark.itsadeal.game.texts
 
 
 interface Texts {
+    val gameName: String
+    val pressToStart: String
     val bankrot: String
     val cantPay: String
     val failTitle: String
@@ -19,6 +21,7 @@ interface Texts {
     val actions: List<String>
     val subjectToIssuer: Map<String, String>
     val subjects: Collection<String>
+    val ok: String
     /**
      * Map<String, Pair<String, String>> - question, neutral answer, incriminating answer
      */

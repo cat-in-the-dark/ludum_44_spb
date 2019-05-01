@@ -1,6 +1,9 @@
 package org.catinthedark.itsadeal.game.texts
 
 class RuTexts : Texts {
+    override val gameName = "It's a deal"
+    override val pressToStart = "Нажмите Пробел, чтобы начать"
+    override val ok = "Ясно"
     override val bankrot = "Вам конец!"
     override val cantPay = "Вы не можете заплатить за крышу"
     override val failTitle = "Вас подставили!"

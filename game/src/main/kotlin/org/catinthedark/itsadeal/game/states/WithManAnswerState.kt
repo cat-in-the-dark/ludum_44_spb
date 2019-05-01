@@ -10,6 +10,7 @@ import org.catinthedark.itsadeal.game.PersonTextures
 import org.catinthedark.itsadeal.game.at
 import org.catinthedark.itsadeal.game.questionary.insertPeriodically
 import org.catinthedark.itsadeal.game.questionary.replaceIssuer
+import org.catinthedark.itsadeal.game.texts.Texts
 import org.catinthedark.itsadeal.game.ui.Button
 import org.catinthedark.itsadeal.lib.IOC
 import org.catinthedark.itsadeal.lib.atOr
@@ -32,6 +33,7 @@ class WithManAnswerState : IState {
 
     override fun onUpdate() {
         val personTextures = IOC.atOrFail<PersonTextures>("personTextures")
+        val txt: Texts by IOC
 
         stage.batch.managed {
             it.draw(am.at<Texture>(Assets.Names.ROOM), 0f, 0f)
@@ -60,7 +62,7 @@ class WithManAnswerState : IState {
                 )
 
             am.at<BitmapFont>(Assets.Names.FONT_SMALL_WHITE)
-                .draw(it, "Ясно", Const.Projection.toHud(112f), Const.Projection.toHud(25f))
+                .draw(it, txt.ok, Const.Projection.toHud(112f), Const.Projection.toHud(25f))
         }
         moneyHud(stage, hud, am)
 
