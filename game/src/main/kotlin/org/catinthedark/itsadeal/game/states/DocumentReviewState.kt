@@ -40,9 +40,10 @@ class DocumentReviewState : IState {
     })
     private val acceptButton = Button(198, 8, 248, 23, {
         am.at<Sound>(Assets.Names.Sounds.ACCEPT_DOC).play()
+        val deffer: Deffer by IOC
         val p = IOC.atOrFail<Person>("person")
 
-        IOC.atOrFail<Deffer>("deffer").register(0.5f) {
+        deffer.register(0.5f) {
             if (p.isEvil) {
                 IOC.put("state", States.FAIL)
             } else {
@@ -52,7 +53,8 @@ class DocumentReviewState : IState {
     })
     private val rejectButton = Button(8, 8, 58, 23, {
         am.at<Sound>(Assets.Names.Sounds.REJECT_DOC).play()
-        IOC.atOrFail<Deffer>("deffer").register(0.5f) {
+        val deffer: Deffer by IOC
+        deffer.register(0.5f) {
             IOC.put("state", States.SKIP)
         }
     })

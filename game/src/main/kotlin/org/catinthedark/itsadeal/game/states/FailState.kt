@@ -19,7 +19,6 @@ class FailState : IState {
     private val hud: Stage by lazy { IOC.atOrFail<Stage>("hud") }
     private val am: AssetManager by lazy { IOC.atOrFail<AssetManager>("assetManager") }
     private var canSkip = false
-    private val deffer by lazy { IOC.atOrFail<Deffer>("deffer") }
     private val inputs by lazy { IOC.atOrFail<InputAdapterHolder>("inputs") }
     private val after = AfterBarrier(1f)
     private val bail = { Const.Balance.bail(IOC.atOr("reward", 0)) }
@@ -27,6 +26,7 @@ class FailState : IState {
     override fun onActivate() {
         am.music(MUSIC).stop()
         am.sound(JAIL).play()
+        val deffer: Deffer by IOC
         deffer.register(2f) { canSkip = true }
         IOC.updateOrSkip<Int>("money") { it - bail() }
     }

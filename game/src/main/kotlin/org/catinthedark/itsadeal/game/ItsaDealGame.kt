@@ -76,8 +76,6 @@ class ItsaDealGame : Game() {
         }
     }
 
-    private val deffer: Deffer by lazy { IOC.atOrFail<Deffer>("deffer") }
-
     override fun create() {
         IOC.put("deffer", DefferImpl())
         IOC.put("stage", stage)
@@ -90,6 +88,8 @@ class ItsaDealGame : Game() {
     }
 
     override fun render() {
+        val deffer: Deffer by IOC
+
         Gdx.gl.glClearColor(0f, 0f, 0f, 0f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
 

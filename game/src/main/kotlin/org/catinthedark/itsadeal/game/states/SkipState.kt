@@ -21,10 +21,11 @@ class SkipState : IState {
     private var credit = 0
 
     override fun onActivate() {
+        val deffer: Deffer by IOC
         credit = Const.Balance.payCredit()
         am.sound(UNPROFIT).play()
         if (isBankrot()) {
-            IOC.at<Deffer>("deffer")?.register(3f) {
+            deffer.register(3f) {
                 IOC.put("state", States.BANKROT)
             }
         }
